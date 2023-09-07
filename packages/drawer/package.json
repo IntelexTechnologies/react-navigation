@@ -1,5 +1,5 @@
 {
-  "name": "@reactnavigationintelex/drawer",
+  "name": "@react-navigation/drawer",
   "description": "Integration for the drawer component from react-native-drawer-layout",
   "version": "7.0.0-alpha.2",
   "keywords": [
