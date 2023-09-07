@@ -36,7 +36,8 @@ export const Overlay = React.forwardRef(function Overlay(
     const active = progress.value > PROGRESS_EPSILON;
 
     return {
-      pointerEvents: active ? 'auto' : 'none',
+      // Fixing closing drawer in iOS
+      // pointerEvents: active ? 'auto' : 'none',
       accessibilityElementsHidden: !active,
       importantForAccessibility: active ? 'auto' : 'no-hide-descendants',
     } as const;
