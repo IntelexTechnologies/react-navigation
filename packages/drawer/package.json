@@ -1,5 +1,5 @@
 {
-  "name": "@react-navigation/drawer",
+  "name": "@react-navigationintelex/drawer",
   "description": "Integration for the drawer component from react-native-drawer-layout",
   "version": "7.0.0-alpha.2",
   "keywords": [
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-navigation/react-navigation.git",
+    "url": "https://github.com/IntelexTechnologies/react-navigation.git",
     "directory": "packages/drawer"
   },
   "bugs": {
