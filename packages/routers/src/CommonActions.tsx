@@ -15,22 +15,21 @@ export type Action =
     }
   | {
       type: 'NAVIGATE';
-      payload: {
-        name: string;
-        params?: object;
-        path?: string;
-        merge?: boolean;
-      };
-      source?: string;
-      target?: string;
-    }
-  | {
-      type: 'NAVIGATE_DEPRECATED';
-      payload: {
-        name: string;
-        params?: object;
-        merge?: boolean;
-      };
+      payload:
+        | {
+            key: string;
+            name?: undefined;
+            params?: object;
+            path?: string;
+            merge?: boolean;
+          }
+        | {
+            name: string;
+            key?: string;
+            params?: object;
+            path?: string;
+            merge?: boolean;
+          };
       source?: string;
       target?: string;
     }
@@ -51,12 +50,17 @@ export function goBack(): Action {
   return { type: 'GO_BACK' };
 }
 
-export function navigate(options: {
-  name: string;
-  params?: object;
-  path?: string;
-  merge?: boolean;
-}): Action;
+export function navigate(
+  options:
+    | { key: string; params?: object; path?: string; merge?: boolean }
+    | {
+        name: string;
+        key?: string;
+        params?: object;
+        path?: string;
+        merge?: boolean;
+      }
+): Action;
 // eslint-disable-next-line no-redeclare
 export function navigate(name: string, params?: object): Action;
 // eslint-disable-next-line no-redeclare
@@ -66,37 +70,13 @@ export function navigate(...args: any): Action {
   } else {
     const payload = args[0] || {};
 
-    if (!payload.hasOwnProperty('name')) {
+    if (!payload.hasOwnProperty('key') && !payload.hasOwnProperty('name')) {
       throw new Error(
-        'You need to specify a name when calling navigate with an object as the argument. See https://reactnavigation.org/docs/navigation-actions#navigate for usage.'
+        'You need to specify name or key when calling navigate with an object as the argument. See https://reactnavigation.org/docs/navigation-actions#navigate for usage.'
       );
     }
 
     return { type: 'NAVIGATE', payload };
-  }
-}
-
-export function navigateDeprecated(
-  ...args:
-    | [name: string]
-    | [name: string, params: object | undefined]
-    | [route: { name: string; params?: object }]
-): Action {
-  if (typeof args[0] === 'string') {
-    return {
-      type: 'NAVIGATE_DEPRECATED',
-      payload: { name: args[0], params: args[1] },
-    };
-  } else {
-    const payload = args[0] || {};
-
-    if (!payload.hasOwnProperty('name')) {
-      throw new Error(
-        'You need to specify a name when calling navigate with an object as the argument. See https://reactnavigation.org/docs/navigation-actions#navigatelegacy for usage.'
-      );
-    }
-
-    return { type: 'NAVIGATE_DEPRECATED', payload };
   }
 }
 

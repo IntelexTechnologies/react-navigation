@@ -1,4 +1,4 @@
-import { CommonActions, Link, Route, useTheme } from '@react-navigation/native';
+import { Link, Route, useTheme } from '@react-navigation/native';
 import Color from 'color';
 import React from 'react';
 import {
@@ -17,21 +17,17 @@ import type {
   BottomTabDescriptor,
   LabelPosition,
 } from '../types';
-import { TabBarIcon } from './TabBarIcon';
+import TabBarIcon from './TabBarIcon';
 
 type Props = {
-  /**
-   * The route object which should be specified by the tab.
-   */
-  route: Route<string>;
-  /**
-   * The `href` to use for the anchor tag on web
-   */
-  href?: string;
   /**
    * Whether the tab is focused.
    */
   focused: boolean;
+  /**
+   * The route object which should be specified by the tab.
+   */
+  route: Route<string>;
   /**
    * The descriptor object for the route.
    */
@@ -63,6 +59,10 @@ type Props = {
    * Custom style for the badge.
    */
   badgeStyle?: StyleProp<TextStyle>;
+  /**
+   * URL to use for the link to the tab.
+   */
+  to?: string;
   /**
    * The button for the tab. Uses a `TouchableWithoutFeedback` by default.
    */
@@ -128,31 +128,30 @@ type Props = {
   style?: StyleProp<ViewStyle>;
 };
 
-export function BottomTabItem({
-  route,
-  href,
+export default function BottomTabBarItem({
   focused,
+  route,
   descriptor,
   label,
   icon,
   badge,
   badgeStyle,
+  to,
   button = ({
-    href,
     children,
     style,
     onPress,
+    to,
     accessibilityRole,
     ...rest
   }: BottomTabBarButtonProps) => {
-    if (Platform.OS === 'web') {
+    if (Platform.OS === 'web' && to) {
       // React Native Web doesn't forward `onClick` if we use `TouchableWithoutFeedback`.
       // We need to use `onClick` to be able to prevent default browser handling of links.
       return (
         <Link
           {...rest}
-          href={href}
-          action={CommonActions.navigate(route.name, route.params)}
+          to={to}
           style={[styles.button, style]}
           onPress={(e: any) => {
             if (
@@ -195,7 +194,7 @@ export function BottomTabItem({
   iconStyle,
   style,
 }: Props) {
-  const { colors, fonts } = useTheme();
+  const { colors } = useTheme();
 
   const activeTintColor =
     customActiveTintColor === undefined
@@ -219,9 +218,8 @@ export function BottomTabItem({
         <Text
           numberOfLines={1}
           style={[
-            { color },
-            fonts.regular,
             styles.label,
+            { color },
             horizontal ? styles.labelBeside : styles.labelBeneath,
             labelStyle,
           ]}
@@ -279,7 +277,7 @@ export function BottomTabItem({
     : inactiveBackgroundColor;
 
   return button({
-    href,
+    to,
     onPress,
     onLongPress,
     testID,

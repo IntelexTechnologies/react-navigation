@@ -3,88 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-alpha.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@7.0.0-alpha.1...@react-navigation/core@7.0.0-alpha.2) (2023-06-22)
+## [6.4.9](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.4.8...@react-navigation/core@6.4.9) (2023-06-22)
+
+**Note:** Version bump only for package @react-navigation/core
+
+## [6.4.8](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.4.7...@react-navigation/core@6.4.8) (2023-02-26)
 
 ### Bug Fixes
 
-* fix infering params when a screen is in a group ([5e9f001](https://github.com/react-navigation/react-navigation/commit/5e9f001e770637ce8f438da981b5d069aa7a4532)), closes [#11325](https://github.com/react-navigation/react-navigation/issues/11325) - by @satya164
+* fix paths in sourcemap files ([42c906d](https://github.com/react-navigation/react-navigation/commit/42c906d77d0235f7b3733c783308863ec686a54e)) - by @
 
-### Code Refactoring
+## [6.4.7](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.4.6...@react-navigation/core@6.4.7) (2023-02-23)
 
-* drop custom fromEntries in favor of Object.fromEntries ([9fe34b4](https://github.com/react-navigation/react-navigation/commit/9fe34b445fcb86e5666f61e144007d7540f014fa)), closes [/reactnative.dev/blog/2022/06/21/version-069#highlights-of-069](https://github.com//reactnative.dev/blog/2022/06/21/version-069/issues/highlights-of-069) - by @satya164
+**Note:** Version bump only for package @react-navigation/core
 
-### Features
-
-* support a top-level path configuration in linking config ([1d0297e](https://github.com/react-navigation/react-navigation/commit/1d0297ed17788c01d7b901ad04b63d3f37f47266)) - by @satya164
-
-### BREAKING CHANGES
-
-* this means we now require at least iOS 12.2 and React Native 0.69 whose minimum supported iOS version is 12.4
-
-# [7.0.0-alpha.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@7.0.0-alpha.0...@react-navigation/core@7.0.0-alpha.1) (2023-03-01)
+## [6.4.6](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.4.5...@react-navigation/core@6.4.6) (2023-01-10)
 
 ### Bug Fixes
 
-* fix paths in sourcemap files ([368e069](https://github.com/react-navigation/react-navigation/commit/368e0691b9fb07d4b1cbe71cfe4c2f40512f93ad)) - by @satya164
-* properly export types to avoid webpack warning ([4f597a8](https://github.com/react-navigation/react-navigation/commit/4f597a8614630a7d42728b1221a5880e6a265a1c)) - by @satya164
+* remove defaultScreenOptions from default navigator options ([681b8b2](https://github.com/react-navigation/react-navigation/commit/681b8b2a1fe3fdf4ed0fd3f1153dcd0739dc6b27)) - by @satya164
 
-# [7.0.0-alpha.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.4.1...@react-navigation/core@7.0.0-alpha.0) (2023-02-17)
+## [6.4.5](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.4.4...@react-navigation/core@6.4.5) (2022-12-12)
+
+**Note:** Version bump only for package @react-navigation/core
+
+## [6.4.4](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.4.3...@react-navigation/core@6.4.4) (2022-12-07)
 
 ### Bug Fixes
 
-* bump query-string version ([#11069](https://github.com/react-navigation/react-navigation/issues/11069)) ([e6c05e2](https://github.com/react-navigation/react-navigation/commit/e6c05e28b901923bd38707676705b7cd564c9620)) - by @krudos
-* fix type of setOptions and mark data passed to callbacks as Readonly ([6655c66](https://github.com/react-navigation/react-navigation/commit/6655c6624f0a66ceeac677ccdb34a9e79e83ab62)) - by @satya164
-* remove defaultScreenOptions from default navigator options ([6267952](https://github.com/react-navigation/react-navigation/commit/6267952001015a9d51ae9fcb3a385f25a136623e)) - by @satya164
-* support dispatching action to child without 'navigationInChildEnabled' if 'target' is specified ([debd620](https://github.com/react-navigation/react-navigation/commit/debd620a12f7eafca0483c16fc33e9ec4a937d43)) - by @satya164
+* bump query-string version ([#11069](https://github.com/react-navigation/react-navigation/issues/11069)) ([e840128](https://github.com/react-navigation/react-navigation/commit/e8401289e98a9e3a62a5b9c178686bb353025deb)) - by @krudos
 
-* fix!: align onReady callback and navigationRef.isReady ([1959baa](https://github.com/react-navigation/react-navigation/commit/1959baa97c101712db84905827f13a8a78a42ca7)) - by @satya164
-* feat!: add `popTo` method for stack and remove going back behaviour of ([c9c2163](https://github.com/react-navigation/react-navigation/commit/c9c2163d28da963bd760cf395d17efe9b851f531)) - by @satya164
-* refactor!: drop support for key property in navigate ([61c53bb](https://github.com/react-navigation/react-navigation/commit/61c53bb1836a47083b3b5ea0f4fddba6081885f2)) - by @satya164
+## [6.4.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.4.1...@react-navigation/core@6.4.3) (2022-11-29)
 
-### Features
-
-* add navigateDeprecated for backward compatibility ([8ea6dc7](https://github.com/react-navigation/react-navigation/commit/8ea6dc793d8596da5e6052dbbae2e4825578dc50)) - by @satya164
-* extract drawer to a separate package ([58b7cae](https://github.com/react-navigation/react-navigation/commit/58b7caeaad00eafbcda36561e75e538e0f02c4af)) - by @satya164
-* support statically confguring navigation tree ([#11144](https://github.com/react-navigation/react-navigation/issues/11144)) ([4cc322e](https://github.com/react-navigation/react-navigation/commit/4cc322e08b3d6fe089710c9c6869bbdc183c2bd6)) - by @satya164
-
-### BREAKING CHANGES
-
-* Previously, the `onReady` prop and `navigationRef.isReady()` work slightly
-differently. The
-`onReady` callback fired when `NavigationContainer` finishes mounting and deep links is resolved.
-The `navigationRef.isReady()` method additionally checks if there are any navigators rendered - which may not be `true` if the user is rendering their navigators conditionally inside a
-`NavigationContainer`.
-
-This changes `onReady` to work similar to `navigationRef.isReady()`. The `onReady` callback will now fire only when there are navigators rendered - reflecting the value of
-`navigationRef.isReady()`.
-* Previously, `navigate` method navigated back if the screen
-already exists in the stack. I have seen many people get confused by this
-behavior. This behavior is also used for sending params to a previous
-screen in the documentation. However, it's also problematic since it could
-either push or pop the screens based on the scenario.
-
-This removes the going back behavior from `navigate` and adds a new method
-`popTo` to go back to a specific screen in the stack.
-
-The methods now behave as follows:
-
-- `navigate(screenName)` will stay on the current screen if the screen is
-already focused, otherwise push a new screen to the stack.
-- `popTo(screenName)` will go back to the screen if it exists in the stack,
-otherwise pop the current screen and add this screen to the stack.
-- To achieve the previous behavior with `navigate`, you can use the `getId`
-prop in which case it'll go to the screen with the matching ID and push or
-pop screens accordingly.
-* Previously, you could specify a route `key` to navigate to, e.g.
-`navigation.navigate({ key: 'someuniquekey' })`. It's problematic since `key` is an internal
-implementation detail and created by the library internally - which makes it weird to use. None
-of the other actions support such usage either.
-
-In addition, we have already added a better API (`getId`) which can be used for similar use
-cases - and gives users full control since they provide the ID and it's not autogenerated by the
-library.
-
-So this change removes the `key` option from the `navigate` action.
+**Note:** Version bump only for package @react-navigation/core
 
 ## [6.4.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.4.0...@react-navigation/core@6.4.1) (2022-11-21)
 

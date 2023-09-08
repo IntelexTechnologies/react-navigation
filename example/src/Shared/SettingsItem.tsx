@@ -8,7 +8,7 @@ type Props = {
   onValueChange: () => void;
 };
 
-export function SettingsItem({ label, value, onValueChange }: Props) {
+export default function SettingsItem({ label, value, onValueChange }: Props) {
   return (
     <View
       style={{

@@ -1,11 +1,10 @@
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {
   createBottomTabNavigator,
-  TransitionPresets,
   useBottomTabBarHeight,
 } from '@react-navigation/bottom-tabs';
 import { HeaderBackButton, useHeaderHeight } from '@react-navigation/elements';
 import {
+  getFocusedRouteNameFromRoute,
   NavigatorScreenParams,
   ParamListBase,
   useIsFocused,
@@ -14,15 +13,15 @@ import type { StackScreenProps } from '@react-navigation/stack';
 import { BlurView } from 'expo-blur';
 import * as React from 'react';
 import { ScrollView, StatusBar, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Albums } from '../Shared/Albums';
-import { Chat } from '../Shared/Chat';
-import { Contacts } from '../Shared/Contacts';
-import { SimpleStack, SimpleStackParams } from './SimpleStack';
+import Albums from '../Shared/Albums';
+import Chat from '../Shared/Chat';
+import Contacts from '../Shared/Contacts';
+import SimpleStackScreen, { SimpleStackParams } from './SimpleStack';
 
 const getTabBarIcon =
-  (name: React.ComponentProps<typeof MaterialCommunityIcons>['name']) =>
+  (name: string) =>
   ({ color, size }: { color: string; size: number }) =>
     <MaterialCommunityIcons name={name} color={color} size={size} />;
 
@@ -53,54 +52,47 @@ const AlbumsScreen = () => {
   );
 };
 
-const Tab = createBottomTabNavigator<BottomTabParams>();
+const BottomTabs = createBottomTabNavigator<BottomTabParams>();
 
-export function BottomTabs({
+export default function BottomTabsScreen({
   navigation,
+  route,
 }: StackScreenProps<ParamListBase, string>) {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Article';
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
+      title: routeName,
     });
-  }, [navigation]);
+  }, [navigation, routeName]);
 
-  const [animationEnabled, setAnimationEnabled] = React.useState(false);
   return (
-    <Tab.Navigator
+    <BottomTabs.Navigator
       screenOptions={{
         headerLeft: (props) => (
           <HeaderBackButton {...props} onPress={navigation.goBack} />
         ),
-        headerRight: () => (
-          <Button
-            style={styles.leftButton}
-            onPress={() => setAnimationEnabled((prev) => !prev)}
-            icon={animationEnabled ? 'heart' : 'heart-outline'}
-          >
-            Fade {animationEnabled ? 'off' : 'on'}
-          </Button>
-        ),
-        ...(animationEnabled && TransitionPresets.FadeTransition),
       }}
     >
-      <Tab.Screen
+      <BottomTabs.Screen
         name="TabStack"
-        component={SimpleStack}
+        component={SimpleStackScreen}
         options={{
           title: 'Article',
           tabBarIcon: getTabBarIcon('file-document'),
         }}
       />
-      <Tab.Screen
+      <BottomTabs.Screen
         name="TabChat"
         component={Chat}
         options={{
-          tabBarLabel: 'Chat (Animated)',
+          tabBarLabel: 'Chat',
           tabBarIcon: getTabBarIcon('message-reply'),
           tabBarBadge: 2,
         }}
       />
-      <Tab.Screen
+      <BottomTabs.Screen
         name="TabContacts"
         component={Contacts}
         options={{
@@ -108,7 +100,7 @@ export function BottomTabs({
           tabBarIcon: getTabBarIcon('contacts'),
         }}
       />
-      <Tab.Screen
+      <BottomTabs.Screen
         name="TabAlbums"
         component={AlbumsScreen}
         options={{
@@ -138,12 +130,6 @@ export function BottomTabs({
           ),
         }}
       />
-    </Tab.Navigator>
+    </BottomTabs.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  leftButton: {
-    paddingRight: 8,
-  },
-});

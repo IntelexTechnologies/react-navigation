@@ -19,7 +19,7 @@ const MESSAGES = [
   'make me a sandwich',
 ];
 
-export function Chat({
+export default function Chat({
   bottom,
   ...rest
 }: Partial<ScrollViewProps & { bottom: boolean }>) {

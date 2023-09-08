@@ -5,7 +5,7 @@ import {
   NavigationRouteContext,
   ParamListBase,
   TabNavigationState,
-  useLinkTools,
+  useLinkBuilder,
   useTheme,
 } from '@react-navigation/native';
 import React from 'react';
@@ -21,9 +21,9 @@ import {
 import { EdgeInsets, useSafeAreaFrame } from 'react-native-safe-area-context';
 
 import type { BottomTabBarProps, BottomTabDescriptorMap } from '../types';
-import { BottomTabBarHeightCallbackContext } from '../utils/BottomTabBarHeightCallbackContext';
-import { useIsKeyboardShown } from '../utils/useIsKeyboardShown';
-import { BottomTabItem } from './BottomTabItem';
+import BottomTabBarHeightCallbackContext from '../utils/BottomTabBarHeightCallbackContext';
+import useIsKeyboardShown from '../utils/useIsKeyboardShown';
+import BottomTabItem from './BottomTabItem';
 
 type Props = BottomTabBarProps & {
   style?: Animated.WithAnimatedValue<StyleProp<ViewStyle>>;
@@ -125,7 +125,7 @@ export const getTabBarHeight = ({
   return DEFAULT_TABBAR_HEIGHT + paddingBottom;
 };
 
-export function BottomTabBar({
+export default function BottomTabBar({
   state,
   navigation,
   descriptors,
@@ -133,7 +133,7 @@ export function BottomTabBar({
   style,
 }: Props) {
   const { colors } = useTheme();
-  const { buildHref } = useLinkTools();
+  const buildLink = useLinkBuilder();
 
   const focusedRoute = state.routes[state.index];
   const focusedDescriptor = descriptors[focusedRoute.key];
@@ -305,7 +305,7 @@ export function BottomTabBar({
 
             if (!focused && !event.defaultPrevented) {
               navigation.dispatch({
-                ...CommonActions.navigate(route),
+                ...CommonActions.navigate({ name: route.name, merge: true }),
                 target: state.key,
               });
             }
@@ -339,7 +339,6 @@ export function BottomTabBar({
             >
               <NavigationRouteContext.Provider value={route}>
                 <BottomTabItem
-                  href={buildHref(route.name, route.params)}
                   route={route}
                   descriptor={descriptors[route.key]}
                   focused={focused}
@@ -347,7 +346,8 @@ export function BottomTabBar({
                   onPress={onPress}
                   onLongPress={onLongPress}
                   accessibilityLabel={accessibilityLabel}
-                  testID={options.tabBarButtonTestID}
+                  to={buildLink(route.name, route.params)}
+                  testID={options.tabBarTestID}
                   allowFontScaling={options.tabBarAllowFontScaling}
                   activeTintColor={tabBarActiveTintColor}
                   inactiveTintColor={tabBarInactiveTintColor}

@@ -38,7 +38,7 @@ export type DrawerNavigationConfig = {
   /**
    * Whether to use the legacy implementation based on Reanimated 1.
    * The new implementation based on Reanimated 2 will perform better,
-   * but it's not possible to use Chrome remote debugger.
+   * but you need additional configuration and need to use Hermes with Flipper to debug.
    *
    * This defaults to `true` if Reanimated 2 is not configured.
    *
@@ -172,9 +172,8 @@ export type DrawerNavigationOptions = HeaderOptions & {
   overlayColor?: string;
 
   /**
-   * Accessibility label for the overlay. This is read by the screen reader when the user taps the overlay.
-   * Defaults to "Close drawer".
-   */
+   * Screen readers will read this string when the user presses on the overlay adjacent to an opened drawer. Defaults to "Close drawer".
+   * **/
   overlayAccessibilityLabel?: string;
 
   /**
@@ -258,26 +257,6 @@ export type DrawerNavigationEventMap = {
    * Event which fires on tapping on the item in the drawer menu.
    */
   drawerItemPress: { data: undefined; canPreventDefault: true };
-  /**
-   * Event which fires when a transition animation starts.
-   */
-  transitionStart: { data: { closing: boolean } };
-  /**
-   * Event which fires when a transition animation ends.
-   */
-  transitionEnd: { data: { closing: boolean } };
-  /**
-   * Event which fires when navigation gesture starts.
-   */
-  gestureStart: { data: undefined };
-  /**
-   * Event which fires when navigation gesture is completed.
-   */
-  gestureEnd: { data: undefined };
-  /**
-   * Event which fires when navigation gesture is canceled.
-   */
-  gestureCancel: { data: undefined };
 };
 
 export type DrawerNavigationHelpers = NavigationHelpers<

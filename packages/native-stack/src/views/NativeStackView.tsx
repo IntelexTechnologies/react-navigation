@@ -31,7 +31,7 @@ const TRANSPARENT_PRESENTATIONS = [
   'containedTransparentModal',
 ];
 
-export function NativeStackView({ state, descriptors }: Props) {
+export default function NativeStackView({ state, descriptors }: Props) {
   const parentHeaderBack = React.useContext(HeaderBackContext);
 
   return (

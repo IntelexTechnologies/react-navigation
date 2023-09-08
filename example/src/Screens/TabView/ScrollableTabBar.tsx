@@ -1,4 +1,3 @@
-import { useLocale } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import {
@@ -9,10 +8,10 @@ import {
   TabView,
 } from 'react-native-tab-view';
 
-import { Albums } from '../../Shared/Albums';
-import { Article } from '../../Shared/Article';
-import { Chat } from '../../Shared/Chat';
-import { Contacts } from '../../Shared/Contacts';
+import Albums from '../../Shared/Albums';
+import Article from '../../Shared/Article';
+import Chat from '../../Shared/Chat';
+import Contacts from '../../Shared/Contacts';
 
 type State = NavigationState<{
   key: string;
@@ -26,9 +25,8 @@ const renderScene = SceneMap({
   chat: () => <Chat bottom />,
 });
 
-export const ScrollableTabBar = () => {
+const ScrollableTabBar = () => {
   const [index, onIndexChange] = React.useState(1);
-  const { direction } = useLocale();
   const [routes] = React.useState([
     { key: 'article', title: 'Article' },
     { key: 'contacts', title: 'Contacts' },
@@ -44,11 +42,8 @@ export const ScrollableTabBar = () => {
       scrollEnabled
       indicatorStyle={styles.indicator}
       style={styles.tabbar}
-      contentContainerStyle={styles.tabbarContentContainer}
       tabStyle={styles.tab}
       labelStyle={styles.label}
-      gap={20}
-      direction={direction}
     />
   );
 
@@ -59,7 +54,6 @@ export const ScrollableTabBar = () => {
         index,
         routes,
       }}
-      direction={direction}
       renderScene={renderScene}
       renderTabBar={renderTabBar}
       onIndexChange={onIndexChange}
@@ -76,12 +70,11 @@ ScrollableTabBar.options = {
   },
 };
 
+export default ScrollableTabBar;
+
 const styles = StyleSheet.create({
   tabbar: {
     backgroundColor: '#3f51b5',
-  },
-  tabbarContentContainer: {
-    paddingHorizontal: 10,
   },
   tab: {
     width: 120,

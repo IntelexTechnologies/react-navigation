@@ -3,25 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-alpha.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@7.0.0-alpha.1...@react-navigation/devtools@7.0.0-alpha.2) (2023-06-22)
+## [6.0.19](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@6.0.18...@react-navigation/devtools@6.0.19) (2023-06-22)
 
 **Note:** Version bump only for package @react-navigation/devtools
 
-# [7.0.0-alpha.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@7.0.0-alpha.0...@react-navigation/devtools@7.0.0-alpha.1) (2023-03-01)
+## [6.0.18](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@6.0.17...@react-navigation/devtools@6.0.18) (2023-02-26)
 
 ### Bug Fixes
 
-* fix paths in sourcemap files ([368e069](https://github.com/react-navigation/react-navigation/commit/368e0691b9fb07d4b1cbe71cfe4c2f40512f93ad)) - by @satya164
+* fix paths in sourcemap files ([42c906d](https://github.com/react-navigation/react-navigation/commit/42c906d77d0235f7b3733c783308863ec686a54e)) - by @
 
-# [7.0.0-alpha.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@6.0.11...@react-navigation/devtools@7.0.0-alpha.0) (2023-02-17)
+## [6.0.17](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@6.0.16...@react-navigation/devtools@6.0.17) (2023-02-23)
 
-### Code Refactoring
+**Note:** Version bump only for package @react-navigation/devtools
 
-* drop react-native-flipper-plugin ([643b8e8](https://github.com/react-navigation/react-navigation/commit/643b8e83b7eeb119b0a339fd8866d790d3178f50)), closes [/github.com/react-native-community/discussions-and-proposals/discussions/546#discussioncomment-4178951](https://github.com//github.com/react-native-community/discussions-and-proposals/discussions/546/issues/discussioncomment-4178951) - by @satya164
+## [6.0.16](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@6.0.15...@react-navigation/devtools@6.0.16) (2023-01-10)
 
-### BREAKING CHANGES
+**Note:** Version bump only for package @react-navigation/devtools
 
-* React Native team is focusing on migrating away from Flipper. So it doesn't make much sense for us to spend additional resources to support the Flipper plugin.
+## [6.0.15](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@6.0.14...@react-navigation/devtools@6.0.15) (2022-12-12)
+
+**Note:** Version bump only for package @react-navigation/devtools
+
+## [6.0.14](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@6.0.13...@react-navigation/devtools@6.0.14) (2022-12-07)
+
+**Note:** Version bump only for package @react-navigation/devtools
+
+## [6.0.13](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@6.0.11...@react-navigation/devtools@6.0.13) (2022-11-29)
+
+**Note:** Version bump only for package @react-navigation/devtools
 
 ## [6.0.11](https://github.com/react-navigation/react-navigation/compare/@react-navigation/devtools@6.0.10...@react-navigation/devtools@6.0.11) (2022-11-21)
 

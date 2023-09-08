@@ -1,26 +1,28 @@
-import { useLocale } from '@react-navigation/native';
 import * as React from 'react';
-import { ScrollView, ScrollViewProps, StyleSheet } from 'react-native';
+import {
+  I18nManager,
+  ScrollView,
+  ScrollViewProps,
+  StyleSheet,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { DrawerPositionContext } from '../utils/DrawerPositionContext';
+import DrawerPositionContext from '../utils/DrawerPositionContext';
 
 type Props = ScrollViewProps & {
   children: React.ReactNode;
 };
 
-function DrawerContentScrollViewInner(
+function DrawerContentScrollView(
   { contentContainerStyle, style, children, ...rest }: Props,
   ref?: React.Ref<ScrollView>
 ) {
   const drawerPosition = React.useContext(DrawerPositionContext);
   const insets = useSafeAreaInsets();
-  const { direction } = useLocale();
 
-  const isRight =
-    direction === 'rtl'
-      ? drawerPosition === 'left'
-      : drawerPosition === 'right';
+  const isRight = I18nManager.getConstants().isRTL
+    ? drawerPosition === 'left'
+    : drawerPosition === 'right';
 
   return (
     <ScrollView
@@ -41,9 +43,7 @@ function DrawerContentScrollViewInner(
   );
 }
 
-export const DrawerContentScrollView = React.forwardRef(
-  DrawerContentScrollViewInner
-);
+export default React.forwardRef(DrawerContentScrollView);
 
 const styles = StyleSheet.create({
   container: {

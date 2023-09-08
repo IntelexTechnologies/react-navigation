@@ -6,13 +6,12 @@ import {
   NavigationContainerRef,
   NavigationState,
   ParamListBase,
-  useNavigationIndependentTree,
 } from '@react-navigation/core';
 import isEqual from 'fast-deep-equal';
 import * as React from 'react';
 
-import { createMemoryHistory } from './createMemoryHistory';
-import { ServerContext } from './ServerContext';
+import createMemoryHistory from './createMemoryHistory';
+import ServerContext from './ServerContext';
 import type { LinkingOptions } from './types';
 
 type ResultState = ReturnType<typeof getStateFromPathDefault>;
@@ -60,21 +59,48 @@ const findMatchingState = <T extends NavigationState>(
 /**
  * Run async function in series as it's called.
  */
-export const series = (cb: () => Promise<void>) => {
-  let queue = Promise.resolve();
-  const callback = () => {
-    queue = queue.then(cb);
+const series = (cb: () => Promise<void>) => {
+  // Whether we're currently handling a callback
+  let handling = false;
+  let queue: (() => Promise<void>)[] = [];
+
+  const callback = async () => {
+    try {
+      if (handling) {
+        // If we're currently handling a previous event, wait before handling this one
+        // Add the callback to the beginning of the queue
+        queue.unshift(callback);
+        return;
+      }
+
+      handling = true;
+
+      await cb();
+    } finally {
+      handling = false;
+
+      if (queue.length) {
+        // If we have queued items, handle the last one
+        const last = queue.pop();
+
+        last?.();
+      }
+    }
   };
+
   return callback;
 };
 
 let linkingHandlers: Symbol[] = [];
 
-type Options = LinkingOptions<ParamListBase>;
+type Options = LinkingOptions<ParamListBase> & {
+  independent?: boolean;
+};
 
-export function useLinking(
+export default function useLinking(
   ref: React.RefObject<NavigationContainerRef<ParamListBase>>,
   {
+    independent,
     enabled = true,
     config,
     getStateFromPath = getStateFromPathDefault,
@@ -82,8 +108,6 @@ export function useLinking(
     getActionFromState = getActionFromStateDefault,
   }: Options
 ) {
-  const independent = useNavigationIndependentTree();
-
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
       return undefined;

@@ -18,7 +18,7 @@ const ANDROID_SUPPORTS_RIPPLE =
  * On Android, you can pass the props of TouchableNativeFeedback.
  * On other platforms, you can pass the props of TouchableOpacity.
  */
-export function PlatformPressable({
+export default function PlatformPressable({
   android_ripple,
   pressColor = 'rgba(0, 0, 0, .32)',
   pressOpacity,

@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useLocale } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import {
@@ -10,9 +9,9 @@ import {
   TabView,
 } from 'react-native-tab-view';
 
-import { Article } from '../../Shared/Article';
-import { Chat } from '../../Shared/Chat';
-import { Contacts } from '../../Shared/Contacts';
+import Article from '../../Shared/Article';
+import Chat from '../../Shared/Chat';
+import Contacts from '../../Shared/Contacts';
 
 type Route = {
   key: string;
@@ -27,8 +26,7 @@ const renderScene = SceneMap({
   article: () => <Article />,
 });
 
-export const TabBarIcon = () => {
-  const { direction } = useLocale();
+const TabBarIcon = () => {
   const [index, onIndexChange] = React.useState(0);
   const [routes] = React.useState<Route[]>([
     { key: 'chat', icon: 'md-chatbubbles' },
@@ -45,12 +43,9 @@ export const TabBarIcon = () => {
   ) => (
     <TabBar
       {...props}
-      direction={direction}
       indicatorStyle={styles.indicator}
       renderIcon={renderIcon}
       style={styles.tabbar}
-      contentContainerStyle={styles.tabbarContentContainer}
-      gap={20}
     />
   );
 
@@ -61,7 +56,6 @@ export const TabBarIcon = () => {
         index,
         routes,
       }}
-      direction={direction}
       renderScene={renderScene}
       renderTabBar={renderTabBar}
       onIndexChange={onIndexChange}
@@ -78,12 +72,11 @@ TabBarIcon.options = {
   },
 };
 
+export default TabBarIcon;
+
 const styles = StyleSheet.create({
   tabbar: {
     backgroundColor: '#e91e63',
-  },
-  tabbarContentContainer: {
-    paddingHorizontal: '10%',
   },
   indicator: {
     backgroundColor: '#ffeb3b',

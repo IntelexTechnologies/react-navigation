@@ -9,22 +9,15 @@ import {
   validatePathConfig,
 } from '@react-navigation/core';
 import * as React from 'react';
-import { I18nManager } from 'react-native';
 
-import { LinkingContext } from './LinkingContext';
-import { LocaleDirContext } from './LocaleDirContext';
-import { DefaultTheme } from './theming/DefaultTheme';
-import { ThemeProvider } from './theming/ThemeProvider';
-import type {
-  DocumentTitleOptions,
-  LinkingOptions,
-  LocaleDirection,
-  Theme,
-} from './types';
-import { useBackButton } from './useBackButton';
-import { useDocumentTitle } from './useDocumentTitle';
-import { useLinking } from './useLinking';
-import { useThenable } from './useThenable';
+import LinkingContext from './LinkingContext';
+import DefaultTheme from './theming/DefaultTheme';
+import ThemeProvider from './theming/ThemeProvider';
+import type { DocumentTitleOptions, LinkingOptions, Theme } from './types';
+import useBackButton from './useBackButton';
+import useDocumentTitle from './useDocumentTitle';
+import useLinking from './useLinking';
+import useThenable from './useThenable';
 
 declare global {
   var REACT_NAVIGATION_DEVTOOLS: WeakMap<
@@ -36,11 +29,11 @@ declare global {
 global.REACT_NAVIGATION_DEVTOOLS = new WeakMap();
 
 type Props<ParamList extends {}> = NavigationContainerProps & {
-  direction?: LocaleDirection;
   theme?: Theme;
   linking?: LinkingOptions<ParamList>;
   fallback?: React.ReactNode;
   documentTitle?: DocumentTitleOptions;
+  onReady?: () => void;
 };
 
 /**
@@ -50,8 +43,6 @@ type Props<ParamList extends {}> = NavigationContainerProps & {
  * @param props.initialState Initial state object for the navigation tree. When deep link handling is enabled, this will override deep links when specified. Make sure that you don't specify an `initialState` when there's a deep link (`Linking.getInitialURL()`).
  * @param props.onReady Callback which is called after the navigation tree mounts.
  * @param props.onStateChange Callback which is called with the latest navigation state when it changes.
- * @param props.onUnhandledAction Callback which is called when an action is not handled.
- * @param props.direction Text direction of the components. Defaults to `'ltr'`.
  * @param props.theme Theme object for the navigators.
  * @param props.linking Options for deep linking. Deep link handling is enabled when this prop is provided, unless `linking.enabled` is `false`.
  * @param props.fallback Fallback component to render until we have finished getting initial state when linking is enabled. Defaults to `null`.
@@ -61,11 +52,11 @@ type Props<ParamList extends {}> = NavigationContainerProps & {
  */
 function NavigationContainerInner(
   {
-    direction = I18nManager.getConstants().isRTL ? 'rtl' : 'ltr',
     theme = DefaultTheme,
     linking,
     fallback = null,
     documentTitle,
+    onReady,
     ...rest
   }: Props<ParamListBase>,
   ref?: React.Ref<NavigationContainerRef<ParamListBase> | null>
@@ -83,6 +74,7 @@ function NavigationContainerInner(
   useDocumentTitle(refContainer, documentTitle);
 
   const { getInitialState } = useLinking(refContainer, {
+    independent: rest.independent,
     enabled: isLinkingEnabled,
     prefixes: [],
     ...linking,
@@ -114,36 +106,47 @@ function NavigationContainerInner(
 
   const linkingContext = React.useMemo(() => ({ options: linking }), [linking]);
 
-  const isLinkingReady =
-    rest.initialState != null || !isLinkingEnabled || isResolved;
+  const isReady = rest.initialState != null || !isLinkingEnabled || isResolved;
 
-  if (!isLinkingReady) {
+  const onReadyRef = React.useRef(onReady);
+
+  React.useEffect(() => {
+    onReadyRef.current = onReady;
+  });
+
+  React.useEffect(() => {
+    if (isReady) {
+      onReadyRef.current?.();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
     // This is temporary until we have Suspense for data-fetching
     // Then the fallback will be handled by a parent `Suspense` component
     return fallback as React.ReactElement;
   }
 
   return (
-    <LocaleDirContext.Provider value={direction}>
-      <LinkingContext.Provider value={linkingContext}>
-        <ThemeProvider value={theme}>
-          <BaseNavigationContainer
-            {...rest}
-            initialState={
-              rest.initialState == null ? initialState : rest.initialState
-            }
-            ref={refContainer}
-          />
-        </ThemeProvider>
-      </LinkingContext.Provider>
-    </LocaleDirContext.Provider>
+    <LinkingContext.Provider value={linkingContext}>
+      <ThemeProvider value={theme}>
+        <BaseNavigationContainer
+          {...rest}
+          initialState={
+            rest.initialState == null ? initialState : rest.initialState
+          }
+          ref={refContainer}
+        />
+      </ThemeProvider>
+    </LinkingContext.Provider>
   );
 }
 
-export const NavigationContainer = React.forwardRef(
-  NavigationContainerInner
-) as <RootParamList extends {} = ReactNavigation.RootParamList>(
+const NavigationContainer = React.forwardRef(NavigationContainerInner) as <
+  RootParamList extends {} = ReactNavigation.RootParamList
+>(
   props: Props<RootParamList> & {
     ref?: React.Ref<NavigationContainerRef<RootParamList>>;
   }
 ) => React.ReactElement;
+
+export default NavigationContainer;

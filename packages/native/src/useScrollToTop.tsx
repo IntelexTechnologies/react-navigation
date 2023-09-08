@@ -48,7 +48,9 @@ function getScrollableNode(ref: React.RefObject<ScrollableWrapper>) {
   }
 }
 
-export function useScrollToTop(ref: React.RefObject<ScrollableWrapper>) {
+export default function useScrollToTop(
+  ref: React.RefObject<ScrollableWrapper>
+) {
   const navigation = useNavigation();
   const route = useRoute();
 

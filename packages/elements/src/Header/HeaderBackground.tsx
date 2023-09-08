@@ -14,7 +14,7 @@ type Props = Omit<ViewProps, 'style'> & {
   children?: React.ReactNode;
 };
 
-export function HeaderBackground({ style, ...rest }: Props) {
+export default function HeaderBackground({ style, ...rest }: Props) {
   const { colors } = useTheme();
 
   return (

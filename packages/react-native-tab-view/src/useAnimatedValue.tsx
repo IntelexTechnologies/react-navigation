@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Animated } from 'react-native';
 
-export function useAnimatedValue(initialValue: number) {
+export default function useAnimatedValue(initialValue: number) {
   const lazyRef = React.useRef<Animated.Value>();
 
   if (lazyRef.current === undefined) {

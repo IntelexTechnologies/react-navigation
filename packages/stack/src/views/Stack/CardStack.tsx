@@ -4,7 +4,6 @@ import {
   SafeAreaProviderCompat,
 } from '@react-navigation/elements';
 import type {
-  LocaleDirection,
   ParamListBase,
   Route,
   StackNavigationState,
@@ -36,25 +35,22 @@ import type {
   StackHeaderMode,
   StackNavigationOptions,
 } from '../../types';
-import { findLastIndex } from '../../utils/findLastIndex';
-import { getDistanceForDirection } from '../../utils/getDistanceForDirection';
+import findLastIndex from '../../utils/findLastIndex';
+import getDistanceForDirection from '../../utils/getDistanceForDirection';
 import type { Props as HeaderContainerProps } from '../Header/HeaderContainer';
 import { MaybeScreen, MaybeScreenContainer } from '../Screens';
 import { getIsModalPresentation } from './Card';
-import { CardContainer } from './CardContainer';
+import CardContainer from './CardContainer';
 
 type GestureValues = {
   [key: string]: Animated.Value;
 };
 
 type Props = {
-  // eslint-disable-next-line react/no-unused-prop-types
-  direction: LocaleDirection;
   insets: EdgeInsets;
   state: StackNavigationState<ParamListBase>;
   descriptors: StackDescriptorMap;
   routes: Route<string>[];
-  // eslint-disable-next-line react/no-unused-prop-types
   openingRouteKeys: string[];
   closingRouteKeys: string[];
   onOpenRoute: (props: { route: Route<string> }) => void;
@@ -165,8 +161,7 @@ const getHeaderHeights = (
 
 const getDistanceFromOptions = (
   layout: Layout,
-  descriptor: StackDescriptor,
-  isRTL: boolean
+  descriptor?: StackDescriptor
 ) => {
   const {
     presentation,
@@ -175,14 +170,13 @@ const getDistanceFromOptions = (
       : DefaultTransition.gestureDirection,
   } = (descriptor?.options || {}) as StackNavigationOptions;
 
-  return getDistanceForDirection(layout, gestureDirection, isRTL);
+  return getDistanceForDirection(layout, gestureDirection);
 };
 
 const getProgressFromGesture = (
   gesture: Animated.Value,
   layout: Layout,
-  descriptor: StackDescriptor,
-  isRTL: boolean
+  descriptor?: StackDescriptor
 ) => {
   const distance = getDistanceFromOptions(
     {
@@ -191,8 +185,7 @@ const getProgressFromGesture = (
       width: Math.max(1, layout.width),
       height: Math.max(1, layout.height),
     },
-    descriptor,
-    isRTL
+    descriptor
   );
 
   if (distance > 0) {
@@ -208,7 +201,7 @@ const getProgressFromGesture = (
   });
 };
 
-export class CardStack extends React.Component<Props, State> {
+export default class CardStack extends React.Component<Props, State> {
   static getDerivedStateFromProps(
     props: Props,
     state: State
@@ -229,11 +222,7 @@ export class CardStack extends React.Component<Props, State> {
         new Animated.Value(
           props.openingRouteKeys.includes(curr.key) &&
           animationEnabled !== false
-            ? getDistanceFromOptions(
-                state.layout,
-                descriptor,
-                props.direction === 'rtl'
-              )
+            ? getDistanceFromOptions(state.layout, descriptor)
             : 0
         );
 
@@ -314,8 +303,6 @@ export class CardStack extends React.Component<Props, State> {
           ? 'float'
           : 'screen');
 
-      const isRTL = props.direction === 'rtl';
-
       const scene = {
         route,
         descriptor: {
@@ -336,8 +323,7 @@ export class CardStack extends React.Component<Props, State> {
           current: getProgressFromGesture(
             currentGesture,
             state.layout,
-            descriptor,
-            isRTL
+            descriptor
           ),
           next:
             nextGesture &&
@@ -345,16 +331,14 @@ export class CardStack extends React.Component<Props, State> {
               ? getProgressFromGesture(
                   nextGesture,
                   state.layout,
-                  nextDescriptor,
-                  isRTL
+                  nextDescriptor
                 )
               : undefined,
           previous: previousGesture
             ? getProgressFromGesture(
                 previousGesture,
                 state.layout,
-                previousDescriptor,
-                isRTL
+                previousDescriptor
               )
             : undefined,
         },
@@ -601,9 +585,9 @@ export class CardStack extends React.Component<Props, State> {
             // For the old implementation, it stays the same it was
             let isScreenActive:
               | Animated.AnimatedInterpolation<0 | 1 | 2>
-              | 0
+              | 2
               | 1
-              | 2 = 1;
+              | 0 = 1;
 
             if (index < self.length - activeScreensLimit - 1) {
               // screen should be inactive because it is too deep in the stack

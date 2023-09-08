@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 
 import type { Layout } from '../types';
 
-export function getDefaultHeaderHeight(
+export default function getDefaultHeaderHeight(
   layout: Layout,
   modalPresentation: boolean,
   statusBarHeight: number

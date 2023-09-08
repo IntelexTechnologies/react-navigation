@@ -3,21 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.4.0-alpha.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.4.0-alpha.0...@react-navigation/elements@1.4.0-alpha.1) (2023-06-22)
+## [1.3.18](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.17...@react-navigation/elements@1.3.18) (2023-06-22)
 
 **Note:** Version bump only for package @react-navigation/elements
 
-# [1.4.0-alpha.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.9-alpha.0...@react-navigation/elements@1.4.0-alpha.0) (2023-03-01)
+## [1.3.17](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.16...@react-navigation/elements@1.3.17) (2023-02-26)
 
 ### Bug Fixes
 
-* fix paths in sourcemap files ([368e069](https://github.com/react-navigation/react-navigation/commit/368e0691b9fb07d4b1cbe71cfe4c2f40512f93ad)) - by @satya164
+* fix paths in sourcemap files ([42c906d](https://github.com/react-navigation/react-navigation/commit/42c906d77d0235f7b3733c783308863ec686a54e)) - by @
 
-### Features
+## [1.3.16](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.15...@react-navigation/elements@1.3.16) (2023-02-23)
 
-* add ability to customize the fonts with the theme ([#11243](https://github.com/react-navigation/react-navigation/issues/11243)) ([1cd6836](https://github.com/react-navigation/react-navigation/commit/1cd6836f1d10bcdf7f96d9e4b9f7de0ddea9391f)) - by @satya164
+**Note:** Version bump only for package @react-navigation/elements
 
-## [1.3.9-alpha.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.7...@react-navigation/elements@1.3.9-alpha.0) (2023-02-17)
+## [1.3.15](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.14...@react-navigation/elements@1.3.15) (2023-02-14)
+
+**Note:** Version bump only for package @react-navigation/elements
+
+## [1.3.14](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.13...@react-navigation/elements@1.3.14) (2023-01-31)
+
+**Note:** Version bump only for package @react-navigation/elements
+
+## [1.3.13](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.12...@react-navigation/elements@1.3.13) (2023-01-10)
+
+**Note:** Version bump only for package @react-navigation/elements
+
+## [1.3.12](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.11...@react-navigation/elements@1.3.12) (2022-12-16)
+
+### Bug Fixes
+
+* allow complex children in HeaderTitle ([#11100](https://github.com/react-navigation/react-navigation/issues/11100)) ([260e35d](https://github.com/react-navigation/react-navigation/commit/260e35d4a1ef5ad182af35ef7696430ac48b6657)) - by @vonovak
+
+## [1.3.11](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.10...@react-navigation/elements@1.3.11) (2022-12-12)
+
+**Note:** Version bump only for package @react-navigation/elements
+
+## [1.3.10](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.9...@react-navigation/elements@1.3.10) (2022-12-07)
+
+**Note:** Version bump only for package @react-navigation/elements
+
+## [1.3.9](https://github.com/react-navigation/react-navigation/compare/@react-navigation/elements@1.3.7...@react-navigation/elements@1.3.9) (2022-11-29)
 
 **Note:** Version bump only for package @react-navigation/elements
 

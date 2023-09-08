@@ -1,18 +1,13 @@
 /**
  * Navigators
  */
-export { createMaterialTopTabNavigator } from './navigators/createMaterialTopTabNavigator';
+export { default as createMaterialTopTabNavigator } from './navigators/createMaterialTopTabNavigator';
 
 /**
  * Views
  */
-export { MaterialTopTabBar } from './views/MaterialTopTabBar';
-export { MaterialTopTabView } from './views/MaterialTopTabView';
-
-/**
- * Utilities
- */
-export { useTabAnimation } from './utils/useTabAnimation';
+export { default as MaterialTopTabBar } from './views/MaterialTopTabBar';
+export { default as MaterialTopTabView } from './views/MaterialTopTabView';
 
 /**
  * Types

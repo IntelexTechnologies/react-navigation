@@ -7,7 +7,7 @@
 
 import * as stacktraceParser from 'stacktrace-parser';
 
-import { HermesParsedStack, parseHermesStack } from './parseHermesStack';
+import parseHermesStack, { HermesParsedStack } from './parseHermesStack';
 
 interface StackFrame {
   methodName: string;
@@ -39,9 +39,7 @@ function convertHermesStack(stack: HermesParsedStack): StackFrame[] {
   return frames;
 }
 
-export function parseErrorStack(
-  errorStack?: string | StackFrame[]
-): StackFrame[] {
+function parseErrorStack(errorStack?: string | StackFrame[]): StackFrame[] {
   if (!errorStack) {
     return [];
   }
@@ -57,3 +55,5 @@ export function parseErrorStack(
 
   return parsedStack as StackFrame[];
 }
+
+export default parseErrorStack;

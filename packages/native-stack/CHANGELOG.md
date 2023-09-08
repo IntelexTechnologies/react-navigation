@@ -3,47 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-alpha.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@7.0.0-alpha.1...@react-navigation/native-stack@7.0.0-alpha.2) (2023-06-22)
+## [6.9.13](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.12...@react-navigation/native-stack@6.9.13) (2023-06-22)
+
+### Bug Fixes
+
+* fix headerBackTitleVisible in native-stack ([#11423](https://github.com/react-navigation/react-navigation/issues/11423)) ([596c633](https://github.com/react-navigation/react-navigation/commit/596c633f78d8f0aef2b7df7c4ec308cbe4b26fe5)) - by @kacperkapusciak
+
+## [6.9.12](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.11...@react-navigation/native-stack@6.9.12) (2023-02-26)
+
+### Bug Fixes
+
+* fix paths in sourcemap files ([42c906d](https://github.com/react-navigation/react-navigation/commit/42c906d77d0235f7b3733c783308863ec686a54e)) - by @
+
+## [6.9.11](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.10...@react-navigation/native-stack@6.9.11) (2023-02-23)
+
+### Bug Fixes
+
+* fix headerBackVisible type annotation ([#11220](https://github.com/react-navigation/react-navigation/issues/11220)) ([fac8f32](https://github.com/react-navigation/react-navigation/commit/fac8f320e3dbf104a89794988443725c23ff9922)) - by @Vin-Xi
+
+## [6.9.10](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.9...@react-navigation/native-stack@6.9.10) (2023-02-14)
+
+### Bug Fixes
+
+* make headerBackground visible with transparent header ([#11109](https://github.com/react-navigation/react-navigation/issues/11109)) ([d7ef2bf](https://github.com/react-navigation/react-navigation/commit/d7ef2bf4ce77d1405c46d51fd2f375802c0768c4)) - by @yhkaplan
+
+## [6.9.9](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.8...@react-navigation/native-stack@6.9.9) (2023-01-31)
 
 **Note:** Version bump only for package @react-navigation/native-stack
 
-# [7.0.0-alpha.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@7.0.0-alpha.0...@react-navigation/native-stack@7.0.0-alpha.1) (2023-03-01)
+## [6.9.8](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.7...@react-navigation/native-stack@6.9.8) (2023-01-10)
 
-### Bug Fixes
+**Note:** Version bump only for package @react-navigation/native-stack
 
-* fix paths in sourcemap files ([368e069](https://github.com/react-navigation/react-navigation/commit/368e0691b9fb07d4b1cbe71cfe4c2f40512f93ad)) - by @satya164
+## [6.9.7](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.6...@react-navigation/native-stack@6.9.7) (2022-12-16)
 
-### Features
+**Note:** Version bump only for package @react-navigation/native-stack
 
-* add ability to customize the fonts with the theme ([#11243](https://github.com/react-navigation/react-navigation/issues/11243)) ([1cd6836](https://github.com/react-navigation/react-navigation/commit/1cd6836f1d10bcdf7f96d9e4b9f7de0ddea9391f)) - by @satya164
+## [6.9.6](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.5...@react-navigation/native-stack@6.9.6) (2022-12-12)
 
-# [7.0.0-alpha.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.2...@react-navigation/native-stack@7.0.0-alpha.0) (2023-02-17)
+**Note:** Version bump only for package @react-navigation/native-stack
 
-### Bug Fixes
+## [6.9.5](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.4...@react-navigation/native-stack@6.9.5) (2022-12-07)
 
-* fix headerBackVisible type annotation ([#11220](https://github.com/react-navigation/react-navigation/issues/11220)) ([d18936a](https://github.com/react-navigation/react-navigation/commit/d18936a21fbd8a3974a4a83f613df0ef00aafbcd)) - by @Vin-Xi
-* make headerBackground visible with transparent header ([#11109](https://github.com/react-navigation/react-navigation/issues/11109)) ([2b1e8dc](https://github.com/react-navigation/react-navigation/commit/2b1e8dccc315ffa47fb7d4fabb1c597f508c5511)) - by @yhkaplan
+**Note:** Version bump only for package @react-navigation/native-stack
 
-* refactor!: improve the API for Link component ([7f35837](https://github.com/react-navigation/react-navigation/commit/7f3583793ad17475531e155f1f433ffa16547015)) - by @satya164
+## [6.9.4](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.2...@react-navigation/native-stack@6.9.4) (2022-11-29)
 
-### BREAKING CHANGES
-
-* Initially the `Link` component was designed to work with path strings via the `to` prop. But it has few issues:
-
-- The path strings are not type-safe, making it easy to cause typos and bugs after
-refactor
-- The API made navigating via screen name more incovenient, even if that's the preferred approach
-
-This revamps the API of the `Link` component to make it easier to use. Instead of `to` prop, it now accepts `screen` and `params` props, as well as an optional `href` prop to
-use instead of the generated path.
-
-e.g.:
-
-```js
-<Link screen="Details" params={{ foo: 42 }}>Go to Details</Link>
-```
-
-This also drops the `useLinkTo` hook and consolidates into the `useLinkTools` hook - which lets us build a `href` for a screen or action for a path.
+**Note:** Version bump only for package @react-navigation/native-stack
 
 ## [6.9.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native-stack@6.9.1...@react-navigation/native-stack@6.9.2) (2022-11-21)
 

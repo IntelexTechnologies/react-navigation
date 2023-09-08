@@ -7,7 +7,6 @@ import type {
 } from '@react-navigation/elements';
 import type {
   Descriptor,
-  LocaleDirection,
   NavigationHelpers,
   NavigationProp,
   ParamListBase,
@@ -166,7 +165,7 @@ export type StackHeaderOptions = Omit<
   /**
    * Whether the back button title should be visible or not.
    *
-   * Defaults to `true` on iOS, `false on Android.
+   * Defaults to `true` on iOS, `false` on Android.
    */
   headerBackTitleVisible?: boolean;
   /**
@@ -405,7 +404,7 @@ export type StackCardInterpolationProps = {
   /**
    * Animated node representing multiplier when direction is inverted (-1 - inverted, 1 - normal).
    */
-  inverted: Animated.AnimatedInterpolation<1 | -1>;
+  inverted: Animated.AnimatedInterpolation<-1 | 1>;
   /**
    * Layout measurements for various items we use for animation.
    */
@@ -469,10 +468,6 @@ export type StackHeaderInterpolationProps = {
      */
     progress: Animated.AnimatedInterpolation<number>;
   };
-  /**
-   * Writing direction of the layout.
-   */
-  direction: LocaleDirection;
   /**
    * Layout measurements for various items we use for animation.
    */

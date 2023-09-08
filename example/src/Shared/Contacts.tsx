@@ -87,7 +87,7 @@ const ItemSeparator = () => {
   );
 };
 
-export function Contacts() {
+export default function Contacts() {
   const ref = React.useRef<FlatList<Item>>(null);
 
   useScrollToTop(ref);

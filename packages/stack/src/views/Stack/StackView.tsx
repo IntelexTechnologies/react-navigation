@@ -3,8 +3,6 @@ import {
   SafeAreaProviderCompat,
 } from '@react-navigation/elements';
 import {
-  CommonActions,
-  LocaleDirection,
   ParamListBase,
   Route,
   StackActions,
@@ -12,23 +10,24 @@ import {
 } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import {
+  EdgeInsets,
+  SafeAreaInsetsContext,
+} from 'react-native-safe-area-context';
 
 import type {
   StackDescriptorMap,
   StackNavigationConfig,
   StackNavigationHelpers,
 } from '../../types';
-import { ModalPresentationContext } from '../../utils/ModalPresentationContext';
+import ModalPresentationContext from '../../utils/ModalPresentationContext';
 import { GestureHandlerRootView } from '../GestureHandler';
-import {
-  HeaderContainer,
+import HeaderContainer, {
   Props as HeaderContainerProps,
 } from '../Header/HeaderContainer';
-import { CardStack } from './CardStack';
+import CardStack from './CardStack';
 
 type Props = StackNavigationConfig & {
-  direction: LocaleDirection;
   state: StackNavigationState<ParamListBase>;
   navigation: StackNavigationHelpers;
   descriptors: StackDescriptorMap;
@@ -61,7 +60,7 @@ const GestureHandlerWrapper = GestureHandlerRootView ?? View;
 const isArrayEqual = (a: any[], b: any[]) =>
   a.length === b.length && a.every((it, index) => it === b[index]);
 
-export class StackView extends React.Component<Props, State> {
+export default class StackView extends React.Component<Props, State> {
   static getDerivedStateFromProps(
     props: Readonly<Props>,
     state: Readonly<State>
@@ -329,18 +328,7 @@ export class StackView extends React.Component<Props, State> {
     ) {
       // If route isn't present in current state, but was closing, assume that a close animation was cancelled
       // So we need to add this route back to the state
-      navigation.dispatch((state) => {
-        const routes = [
-          ...state.routes.filter((r) => r.key !== route.key),
-          route,
-        ];
-
-        return CommonActions.reset({
-          ...state,
-          routes,
-          index: routes.length - 1,
-        });
-      });
+      navigation.navigate(route);
     } else {
       this.setState((state) => ({
         routes: state.replacingRouteKeys.length
@@ -447,7 +435,7 @@ export class StackView extends React.Component<Props, State> {
                   <HeaderShownContext.Consumer>
                     {(isParentHeaderShown) => (
                       <CardStack
-                        insets={insets!}
+                        insets={insets as EdgeInsets}
                         isParentHeaderShown={isParentHeaderShown}
                         isParentModal={isParentModal}
                         getPreviousRoute={this.getPreviousRoute}

@@ -8,9 +8,9 @@ import * as React from 'react';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
-import { Albums } from '../Shared/Albums';
-import { Article } from '../Shared/Article';
-import { NewsFeed } from '../Shared/NewsFeed';
+import Albums from '../Shared/Albums';
+import Article from '../Shared/Article';
+import NewsFeed from '../Shared/NewsFeed';
 
 export type NativeStackParams = {
   Article: { author: string } | undefined;
@@ -40,13 +40,6 @@ const ArticleScreen = ({
           style={styles.button}
         >
           Replace with feed
-        </Button>
-        <Button
-          mode="contained"
-          onPress={() => navigation.popTo('Albums')}
-          style={styles.button}
-        >
-          Pop to Albums
         </Button>
         <Button
           mode="outlined"
@@ -129,9 +122,9 @@ const AlbumsScreen = ({
   );
 };
 
-const Stack = createNativeStackNavigator<NativeStackParams>();
+const NativeStack = createNativeStackNavigator<NativeStackParams>();
 
-export function NativeStack({
+export default function NativeStackScreen({
   navigation,
 }: NativeStackScreenProps<ParamListBase>) {
   React.useLayoutEffect(() => {
@@ -142,8 +135,8 @@ export function NativeStack({
   }, [navigation]);
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <NativeStack.Navigator>
+      <NativeStack.Screen
         name="Article"
         component={ArticleScreen}
         options={({ route }) => ({
@@ -153,7 +146,7 @@ export function NativeStack({
         })}
         initialParams={{ author: 'Gandalf' }}
       />
-      <Stack.Screen
+      <NativeStack.Screen
         name="NewsFeed"
         component={NewsFeedScreen}
         options={{
@@ -161,7 +154,7 @@ export function NativeStack({
           fullScreenGestureEnabled: true,
         }}
       />
-      <Stack.Screen
+      <NativeStack.Screen
         name="Albums"
         component={AlbumsScreen}
         options={{
@@ -171,7 +164,7 @@ export function NativeStack({
           headerBlurEffect: 'light',
         }}
       />
-    </Stack.Navigator>
+    </NativeStack.Navigator>
   );
 }
 

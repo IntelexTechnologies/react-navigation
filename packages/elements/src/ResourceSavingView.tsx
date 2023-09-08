@@ -9,7 +9,7 @@ type Props = {
 
 const FAR_FAR_AWAY = 30000; // this should be big enough to move the whole view out of its container
 
-export function ResourceSavingView({
+export default function ResourceSavingScene({
   visible,
   children,
   style,

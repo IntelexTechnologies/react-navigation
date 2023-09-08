@@ -12,7 +12,12 @@ type Props = {
   style: any;
 };
 
-export function ModalStatusBarManager({ dark, layout, insets, style }: Props) {
+export default function ModalStatusBarManager({
+  dark,
+  layout,
+  insets,
+  style,
+}: Props) {
   const { dark: darkTheme } = useTheme();
   const [overlapping, setOverlapping] = React.useState(true);
 

@@ -14,9 +14,9 @@ import {
 } from 'react-native';
 import { Appbar, Button } from 'react-native-paper';
 
-import { Albums } from '../Shared/Albums';
-import { Article } from '../Shared/Article';
-import { NewsFeed } from '../Shared/NewsFeed';
+import Albums from '../Shared/Albums';
+import Article from '../Shared/Article';
+import NewsFeed from '../Shared/NewsFeed';
 
 export type NativeStackParams = {
   Article: { author: string } | undefined;
@@ -111,9 +111,9 @@ const AlbumsScreen = ({
   );
 };
 
-const Stack = createNativeStackNavigator<NativeStackParams>();
+const NativeStack = createNativeStackNavigator<NativeStackParams>();
 
-export function NativeStackHeaderCustomization({
+export default function NativeStackScreen({
   navigation,
 }: NativeStackScreenProps<ParamListBase>) {
   React.useLayoutEffect(() => {
@@ -131,8 +131,8 @@ export function NativeStackHeaderCustomization({
   };
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <NativeStack.Navigator>
+      <NativeStack.Screen
         name="Article"
         component={ArticleScreen}
         options={({ route, navigation }) => ({
@@ -165,7 +165,7 @@ export function NativeStackHeaderCustomization({
         })}
         initialParams={{ author: 'Gandalf' }}
       />
-      <Stack.Screen
+      <NativeStack.Screen
         name="NewsFeed"
         component={NewsFeedScreen}
         options={{
@@ -175,7 +175,7 @@ export function NativeStackHeaderCustomization({
           ),
         }}
       />
-      <Stack.Screen
+      <NativeStack.Screen
         name="Albums"
         component={AlbumsScreen}
         options={{
@@ -188,7 +188,7 @@ export function NativeStackHeaderCustomization({
           ),
         }}
       />
-    </Stack.Navigator>
+    </NativeStack.Navigator>
   );
 }
 

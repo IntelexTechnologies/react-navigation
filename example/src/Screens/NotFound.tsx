@@ -5,7 +5,7 @@ import { Button } from 'react-native-paper';
 
 import type { RootStackParamList } from '../screens';
 
-export const NotFound = ({
+const NotFoundScreen = ({
   route,
   navigation,
 }: StackScreenProps<RootStackParamList, 'NotFound'>) => {
@@ -22,6 +22,8 @@ export const NotFound = ({
     </View>
   );
 };
+
+export default NotFoundScreen;
 
 const styles = StyleSheet.create({
   title: {

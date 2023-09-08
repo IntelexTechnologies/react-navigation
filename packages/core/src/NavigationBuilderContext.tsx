@@ -51,7 +51,7 @@ export type ChildBeforeRemoveListener = (action: NavigationAction) => boolean;
 /**
  * Context which holds the required helpers needed to build nested navigators.
  */
-export const NavigationBuilderContext = React.createContext<{
+const NavigationBuilderContext = React.createContext<{
   onAction?: (
     action: NavigationAction,
     visitedNavigators?: Set<string>
@@ -66,3 +66,5 @@ export const NavigationBuilderContext = React.createContext<{
   onDispatchAction: () => undefined,
   onOptionsChange: () => undefined,
 });
+
+export default NavigationBuilderContext;

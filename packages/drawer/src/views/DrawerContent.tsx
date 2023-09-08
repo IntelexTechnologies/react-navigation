@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import type { DrawerContentComponentProps } from '../types';
-import { DrawerContentScrollView } from './DrawerContentScrollView';
-import { DrawerItemList } from './DrawerItemList';
+import DrawerContentScrollView from './DrawerContentScrollView';
+import DrawerItemList from './DrawerItemList';
 
-export function DrawerContent({
+export default function DrawerContent({
   descriptors,
   state,
   ...rest

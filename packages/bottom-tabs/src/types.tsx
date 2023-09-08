@@ -163,7 +163,7 @@ export type BottomTabNavigationOptions = HeaderOptions & {
   /**
    * ID to locate this tab button in tests.
    */
-  tabBarButtonTestID?: string;
+  tabBarTestID?: string;
 
   /**
    * Function which returns a React element to render as the tab bar button.
@@ -254,22 +254,6 @@ export type BottomTabNavigationOptions = HeaderOptions & {
    * Only supported on iOS and Android.
    */
   freezeOnBlur?: boolean;
-
-  /**
-   * Whether transition animations should be enabled when switching tabs.
-   * Defaults to `false`.
-   */
-  animationEnabled?: boolean;
-
-  /**
-   * Function which specifies interpolated styles for bottom-tab scenes.
-   */
-  sceneStyleInterpolator?: BottomTabSceneStyleInterpolator;
-
-  /**
-   * Object which specifies the animation type (timing or spring) and their options (such as duration for timing).
-   */
-  transitionSpec?: TransitionSpec;
 };
 
 export type BottomTabDescriptor = Descriptor<
@@ -279,57 +263,6 @@ export type BottomTabDescriptor = Descriptor<
 >;
 
 export type BottomTabDescriptorMap = Record<string, BottomTabDescriptor>;
-
-export type BottomTabSceneInterpolationProps = {
-  /**
-   * animation Values for the current screen.
-   */
-  current: Animated.Value;
-};
-
-export type BottomTabSceneInterpolatedStyle = {
-  /**
-   * Interpolated style for the view representing the Scene (View).
-   */
-  sceneStyle: any;
-};
-
-export type BottomTabSceneStyleInterpolator = (
-  props: BottomTabSceneInterpolationProps
-) => BottomTabSceneInterpolatedStyle;
-
-export type TransitionSpec =
-  | {
-      animation: 'timing';
-      config: Omit<
-        Animated.TimingAnimationConfig,
-        'toValue' | keyof Animated.AnimationConfig
-      >;
-    }
-  | {
-      animation: 'spring';
-      config: Omit<
-        Animated.SpringAnimationConfig,
-        'toValue' | keyof Animated.AnimationConfig
-      >;
-    };
-
-export type BottomTabTransitionPreset = {
-  /**
-   * Whether transition animations should be enabled when switching tabs.
-   */
-  animationEnabled?: boolean;
-
-  /**
-   * Function which specifies interpolated styles for bottom-tab scenes.
-   */
-  sceneStyleInterpolator?: BottomTabSceneStyleInterpolator;
-
-  /**
-   * Object which specifies the animation type (timing or spring) and their options (such as duration for timing).
-   */
-  transitionSpec?: TransitionSpec;
-};
 
 export type BottomTabNavigationConfig = {
   /**
@@ -388,7 +321,7 @@ export type BottomTabBarButtonProps = Omit<
   TouchableWithoutFeedbackProps,
   'onPress'
 > & {
-  href?: string;
+  to?: string;
   children: React.ReactNode;
   onPress?: (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent

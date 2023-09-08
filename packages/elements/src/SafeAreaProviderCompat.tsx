@@ -31,20 +31,24 @@ const initialMetrics =
       }
     : initialWindowMetrics;
 
-export function SafeAreaProviderCompat({ children, style }: Props) {
-  const insets = React.useContext(SafeAreaInsetsContext);
-
-  if (insets) {
-    // If we already have insets, don't wrap the stack in another safe area provider
-    // This avoids an issue with updates at the cost of potentially incorrect values
-    // https://github.com/react-navigation/react-navigation/issues/174
-    return <View style={[styles.container, style]}>{children}</View>;
-  }
-
+export default function SafeAreaProviderCompat({ children, style }: Props) {
   return (
-    <SafeAreaProvider initialMetrics={initialMetrics} style={style}>
-      {children}
-    </SafeAreaProvider>
+    <SafeAreaInsetsContext.Consumer>
+      {(insets) => {
+        if (insets) {
+          // If we already have insets, don't wrap the stack in another safe area provider
+          // This avoids an issue with updates at the cost of potentially incorrect values
+          // https://github.com/react-navigation/react-navigation/issues/174
+          return <View style={[styles.container, style]}>{children}</View>;
+        }
+
+        return (
+          <SafeAreaProvider initialMetrics={initialMetrics} style={style}>
+            {children}
+          </SafeAreaProvider>
+        );
+      }}
+    </SafeAreaInsetsContext.Consumer>
   );
 }
 

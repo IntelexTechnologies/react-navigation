@@ -1,8 +1,10 @@
 import * as React from 'react';
 
 import type { Theme } from '../types';
-import { DefaultTheme } from './DefaultTheme';
+import DefaultTheme from './DefaultTheme';
 
-export const ThemeContext = React.createContext<Theme>(DefaultTheme);
+const ThemeContext = React.createContext<Theme>(DefaultTheme);
 
 ThemeContext.displayName = 'ThemeContext';
+
+export default ThemeContext;

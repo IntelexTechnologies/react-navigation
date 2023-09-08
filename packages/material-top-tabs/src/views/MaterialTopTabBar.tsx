@@ -2,7 +2,6 @@ import {
   ParamListBase,
   Route,
   TabNavigationState,
-  useLocale,
   useTheme,
 } from '@react-navigation/native';
 import Color from 'color';
@@ -12,14 +11,13 @@ import { TabBar, TabBarIndicator } from 'react-native-tab-view';
 
 import type { MaterialTopTabBarProps } from '../types';
 
-export function MaterialTopTabBar({
+export default function TabBarTop({
   state,
   navigation,
   descriptors,
   ...rest
 }: MaterialTopTabBarProps) {
-  const { colors, fonts } = useTheme();
-  const { direction } = useLocale();
+  const { colors } = useTheme();
 
   const focusedOptions = descriptors[state.routes[state.index].key].options;
 
@@ -32,7 +30,6 @@ export function MaterialTopTabBar({
     <TabBar
       {...rest}
       navigationState={state}
-      direction={direction}
       scrollEnabled={focusedOptions.tabBarScrollEnabled}
       bounces={focusedOptions.tabBarBounces}
       activeColor={activeColor}
@@ -52,9 +49,7 @@ export function MaterialTopTabBar({
       getAccessibilityLabel={({ route }) =>
         descriptors[route.key].options.tabBarAccessibilityLabel
       }
-      getTestID={({ route }) =>
-        descriptors[route.key].options.tabBarButtonTestID
-      }
+      getTestID={({ route }) => descriptors[route.key].options.tabBarTestID}
       onTabPress={({ route, preventDefault }) => {
         const event = navigation.emit({
           type: 'tabPress',
@@ -106,12 +101,7 @@ export function MaterialTopTabBar({
         if (typeof label === 'string') {
           return (
             <Text
-              style={[
-                { color },
-                fonts.regular,
-                styles.label,
-                options.tabBarLabelStyle,
-              ]}
+              style={[styles.label, { color }, options.tabBarLabelStyle]}
               allowFontScaling={options.tabBarAllowFontScaling}
             >
               {label}

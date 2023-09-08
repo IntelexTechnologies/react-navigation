@@ -1,1 +1,1 @@
-export { PanResponderAdapter as Pager } from './PanResponderAdapter';
+export { default } from './PanResponderAdapter';

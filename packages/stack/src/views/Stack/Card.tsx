@@ -1,4 +1,3 @@
-import type { LocaleDirection } from '@react-navigation/native';
 import Color from 'color';
 import * as React from 'react';
 import {
@@ -21,17 +20,17 @@ import type {
   StackCardStyleInterpolator,
   TransitionSpec,
 } from '../../types';
-import { CardAnimationContext } from '../../utils/CardAnimationContext';
-import { getDistanceForDirection } from '../../utils/getDistanceForDirection';
-import { getInvertedMultiplier } from '../../utils/getInvertedMultiplier';
-import { memoize } from '../../utils/memoize';
+import CardAnimationContext from '../../utils/CardAnimationContext';
+import getDistanceForDirection from '../../utils/getDistanceForDirection';
+import getInvertedMultiplier from '../../utils/getInvertedMultiplier';
+import memoize from '../../utils/memoize';
 import {
   GestureState,
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from '../GestureHandler';
-import { ModalStatusBarManager } from '../ModalStatusBarManager';
-import { CardSheet, CardSheetRef } from './CardSheet';
+import ModalStatusBarManager from '../ModalStatusBarManager';
+import CardSheet, { CardSheetRef } from './CardSheet';
 
 type Props = ViewProps & {
   interpolationIndex: number;
@@ -41,7 +40,6 @@ type Props = ViewProps & {
   gesture: Animated.Value;
   layout: Layout;
   insets: EdgeInsets;
-  direction: LocaleDirection;
   headerDarkContent: boolean | undefined;
   pageOverflowEnabled: boolean;
   gestureDirection: GestureDirection;
@@ -91,7 +89,7 @@ const hasOpacityStyle = (style: any) => {
   return false;
 };
 
-export class Card extends React.Component<Props> {
+export default class Card extends React.Component<Props> {
   static defaultProps = {
     shadowEnabled: false,
     gestureEnabled: true,
@@ -112,7 +110,7 @@ export class Card extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    const { direction, layout, gestureDirection, closing } = this.props;
+    const { layout, gestureDirection, closing } = this.props;
     const { width, height } = layout;
 
     if (width !== prevProps.layout.width) {
@@ -124,9 +122,7 @@ export class Card extends React.Component<Props> {
     }
 
     if (gestureDirection !== prevProps.gestureDirection) {
-      this.inverted.setValue(
-        getInvertedMultiplier(gestureDirection, direction === 'rtl')
-      );
+      this.inverted.setValue(getInvertedMultiplier(gestureDirection));
     }
 
     const toValue = this.getAnimateToValue(this.props);
@@ -155,10 +151,7 @@ export class Card extends React.Component<Props> {
   private isClosing = new Animated.Value(FALSE);
 
   private inverted = new Animated.Value(
-    getInvertedMultiplier(
-      this.props.gestureDirection,
-      this.props.direction === 'rtl'
-    )
+    getInvertedMultiplier(this.props.gestureDirection)
   );
 
   private layout = {
@@ -234,22 +227,16 @@ export class Card extends React.Component<Props> {
     closing,
     layout,
     gestureDirection,
-    direction,
   }: {
     closing?: boolean;
     layout: Layout;
     gestureDirection: GestureDirection;
-    direction: LocaleDirection;
   }) => {
     if (!closing) {
       return 0;
     }
 
-    return getDistanceForDirection(
-      layout,
-      gestureDirection,
-      direction === 'rtl'
-    );
+    return getDistanceForDirection(layout, gestureDirection);
   };
 
   private setPointerEventsEnabled = (enabled: boolean) => {
@@ -275,7 +262,6 @@ export class Card extends React.Component<Props> {
     nativeEvent,
   }: PanGestureHandlerGestureEvent) => {
     const {
-      direction,
       layout,
       onClose,
       onGestureBegin,
@@ -328,7 +314,7 @@ export class Card extends React.Component<Props> {
 
         const closing =
           (translation + velocity * gestureVelocityImpact) *
-            getInvertedMultiplier(gestureDirection, direction === 'rtl') >
+            getInvertedMultiplier(gestureDirection) >
           distance / 2
             ? velocity !== 0 || translation !== 0
             : this.props.closing;
@@ -392,8 +378,7 @@ export class Card extends React.Component<Props> {
   );
 
   private gestureActivationCriteria() {
-    const { direction, layout, gestureDirection, gestureResponseDistance } =
-      this.props;
+    const { layout, gestureDirection, gestureResponseDistance } = this.props;
     const enableTrackpadTwoFingerGesture = true;
 
     const distance =
@@ -420,10 +405,7 @@ export class Card extends React.Component<Props> {
       };
     } else {
       const hitSlop = -layout.width + distance;
-      const invertedMultiplier = getInvertedMultiplier(
-        gestureDirection,
-        direction === 'rtl'
-      );
+      const invertedMultiplier = getInvertedMultiplier(gestureDirection);
 
       if (invertedMultiplier === 1) {
         return {
@@ -464,19 +446,6 @@ export class Card extends React.Component<Props> {
       children,
       containerStyle: customContainerStyle,
       contentStyle,
-      /* eslint-disable @typescript-eslint/no-unused-vars */
-      closing,
-      direction,
-      gestureResponseDistance,
-      gestureVelocityImpact,
-      onClose,
-      onGestureBegin,
-      onGestureCanceled,
-      onGestureEnd,
-      onOpen,
-      onTransition,
-      transitionSpec,
-      /* eslint-enable @typescript-eslint/no-unused-vars */
       ...rest
     } = this.props;
 

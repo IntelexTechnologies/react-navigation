@@ -6,24 +6,6 @@ import type {
   Route,
 } from '@react-navigation/core';
 
-export type LocaleDirection = 'ltr' | 'rtl';
-
-type FontStyle = {
-  fontFamily: string;
-  fontWeight:
-    | 'normal'
-    | 'bold'
-    | '100'
-    | '200'
-    | '300'
-    | '400'
-    | '500'
-    | '600'
-    | '700'
-    | '800'
-    | '900';
-};
-
 export type Theme = {
   dark: boolean;
   colors: {
@@ -33,12 +15,6 @@ export type Theme = {
     text: string;
     border: string;
     notification: string;
-  };
-  fonts: {
-    regular: FontStyle;
-    medium: FontStyle;
-    bold: FontStyle;
-    heavy: FontStyle;
   };
 };
 
@@ -98,21 +74,8 @@ export type LinkingOptions<ParamList extends {}> = {
    * ```
    */
   config?: {
-    /**
-     * Path string to match against for the whole navigation tree.
-     * It's not possible to specify params here since this doesn't belong to a screen.
-     * This is useful when the whole app is under a specific path.
-     * e.g. all of the screens are under `/admin` in `https://example.com/admin`
-     */
-    path?: string;
-    /**
-     * Path configuration for child screens.
-     */
-    screens: PathConfigMap<ParamList>;
-    /**
-     * Name of the initial route to use for the root navigator.
-     */
     initialRouteName?: keyof ParamList;
+    screens: PathConfigMap<ParamList>;
   };
   /**
    * Custom function to get the initial URL used for linking.

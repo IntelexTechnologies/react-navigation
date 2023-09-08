@@ -7,8 +7,8 @@ import * as React from 'react';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
-import { Albums } from '../Shared/Albums';
-import { Article } from '../Shared/Article';
+import Albums from '../Shared/Albums';
+import Article from '../Shared/Article';
 
 type MixedStackParams = {
   Article: { author: string };
@@ -93,11 +93,11 @@ const AlbumsScreen = ({ navigation }: StackScreenProps<MixedStackParams>) => {
   );
 };
 
-const Stack = createStackNavigator<MixedStackParams>();
+const MixedStack = createStackNavigator<MixedStackParams>();
 
 type Props = StackScreenProps<ParamListBase>;
 
-export function MixedStack({ navigation }: Props) {
+export default function MixedStackScreen({ navigation }: Props) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -105,8 +105,8 @@ export function MixedStack({ navigation }: Props) {
   }, [navigation]);
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <MixedStack.Navigator>
+      <MixedStack.Screen
         name="Article"
         component={ArticleScreen}
         options={({ route }) => ({
@@ -114,7 +114,7 @@ export function MixedStack({ navigation }: Props) {
         })}
         initialParams={{ author: 'Gandalf' }}
       />
-      <Stack.Screen
+      <MixedStack.Screen
         name="Albums"
         component={AlbumsScreen}
         options={{
@@ -122,7 +122,7 @@ export function MixedStack({ navigation }: Props) {
           presentation: 'modal',
         }}
       />
-    </Stack.Navigator>
+    </MixedStack.Navigator>
   );
 }
 

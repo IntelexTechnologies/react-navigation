@@ -1,8 +1,8 @@
 import type { ParamListBase } from '@react-navigation/routers';
 import * as React from 'react';
 
-import { NavigationBuilderContext } from './NavigationBuilderContext';
-import { NavigationStateContext } from './NavigationStateContext';
+import NavigationBuilderContext from './NavigationBuilderContext';
+import NavigationStateContext from './NavigationStateContext';
 import type { NavigationProp } from './types';
 
 type Options = {
@@ -11,7 +11,11 @@ type Options = {
   options?: object | undefined;
 };
 
-export function useOptionsGetters({ key, options, navigation }: Options) {
+export default function useOptionsGetters({
+  key,
+  options,
+  navigation,
+}: Options) {
   const optionsRef = React.useRef<object | undefined>(options);
   const optionsGettersFromChildRef = React.useRef<
     Record<string, () => object | undefined | null>

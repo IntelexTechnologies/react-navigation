@@ -7,13 +7,12 @@ import {
 } from '@react-navigation/routers';
 import * as React from 'react';
 
-import { NavigationBuilderContext } from './NavigationBuilderContext';
+import NavigationBuilderContext from './NavigationBuilderContext';
 import type { NavigationHelpers, NavigationProp } from './types';
 import type { NavigationEventEmitter } from './useEventEmitter';
 
 type Options<
   State extends NavigationState,
-  ScreenOptions extends {},
   EventMap extends Record<string, any>
 > = {
   state: State;
@@ -21,9 +20,7 @@ type Options<
   navigation: NavigationHelpers<ParamListBase> &
     Partial<NavigationProp<ParamListBase, string, any, any, any>>;
   setOptions: (
-    cb: (
-      options: Record<string, ScreenOptions>
-    ) => Record<string, ScreenOptions>
+    cb: (options: Record<string, object>) => Record<string, object>
   ) => void;
   router: Router<State, NavigationAction>;
   emitter: NavigationEventEmitter<EventMap>;
@@ -50,7 +47,7 @@ type NavigationCache<
  * It's important to cache them to make sure navigation objects don't change between renders.
  * This lets us apply optimizations like `React.memo` to minimize re-rendering screens.
  */
-export function useNavigationCache<
+export default function useNavigationCache<
   State extends NavigationState,
   ScreenOptions extends {},
   EventMap extends Record<string, any>
@@ -61,7 +58,7 @@ export function useNavigationCache<
   setOptions,
   router,
   emitter,
-}: Options<State, ScreenOptions, EventMap>) {
+}: Options<State, EventMap>) {
   const { stackRef } = React.useContext(NavigationBuilderContext);
 
   // Cache object which holds navigation objects for each screen
@@ -152,12 +149,11 @@ export function useNavigationCache<
 
           return rest.getParent(id);
         },
-        setOptions: (options: object) => {
+        setOptions: (options: object) =>
           setOptions((o) => ({
             ...o,
             [route.key]: { ...o[route.key], ...options },
-          }));
-        },
+          })),
         isFocused: () => {
           const state = getState();
 

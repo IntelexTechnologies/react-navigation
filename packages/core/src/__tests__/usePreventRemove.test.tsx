@@ -1,16 +1,12 @@
-import {
-  ParamListBase,
-  StackActions,
-  StackRouter,
-} from '@react-navigation/routers';
+import { ParamListBase, StackRouter } from '@react-navigation/routers';
 import { act, render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import { BaseNavigationContainer } from '../BaseNavigationContainer';
-import { createNavigationContainerRef } from '../createNavigationContainerRef';
-import { Screen } from '../Screen';
-import { useNavigationBuilder } from '../useNavigationBuilder';
-import { UNSTABLE_usePreventRemove as usePreventRemove } from '../usePreventRemove';
+import BaseNavigationContainer from '../BaseNavigationContainer';
+import createNavigationContainerRef from '../createNavigationContainerRef';
+import Screen from '../Screen';
+import useNavigationBuilder from '../useNavigationBuilder';
+import usePreventRemove from '../usePreventRemove';
 import { MockRouterKey } from './__fixtures__/MockRouter';
 
 jest.mock('nanoid/non-secure', () => {
@@ -101,7 +97,7 @@ it("prevents removing a screen with 'usePreventRemove' hook", () => {
     type: 'stack',
   });
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(onPreventRemove).toBeCalledTimes(1);
@@ -122,7 +118,7 @@ it("prevents removing a screen with 'usePreventRemove' hook", () => {
   shouldContinue = true;
 
   act(() => ref.current?.navigate('bar'));
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(4);
   expect(onStateChange).toBeCalledWith({
@@ -213,7 +209,7 @@ it("prevents removing a screen when 'usePreventRemove' hook is called multiple t
     type: 'stack',
   });
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(onPreventRemove).toBeCalledTimes(1);
@@ -234,7 +230,7 @@ it("prevents removing a screen when 'usePreventRemove' hook is called multiple t
   shouldContinue = true;
 
   act(() => ref.current?.navigate('bar'));
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(4);
   expect(onStateChange).toBeCalledWith({
@@ -318,7 +314,7 @@ it("should have no effect when 'usePreventRemove' hook is set to false", () => {
     type: 'stack',
   });
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(3);
 
@@ -332,7 +328,7 @@ it("should have no effect when 'usePreventRemove' hook is set to false", () => {
   });
 
   act(() => ref.current?.navigate('bar'));
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(5);
   expect(onStateChange).toBeCalledWith({
@@ -440,7 +436,7 @@ it("prevents removing a child screen with 'usePreventRemove' hook", () => {
     type: 'stack',
   });
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(onPreventRemove).toBeCalledTimes(1);
@@ -469,7 +465,7 @@ it("prevents removing a child screen with 'usePreventRemove' hook", () => {
     type: 'stack',
   });
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(ref.current?.getRootState()).toEqual({
@@ -499,7 +495,7 @@ it("prevents removing a child screen with 'usePreventRemove' hook", () => {
   shouldContinue = true;
 
   act(() => ref.current?.navigate('bar'));
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(4);
   expect(onStateChange).toBeCalledWith({
@@ -624,7 +620,7 @@ it("prevents removing a grand child screen with 'usePreventRemove' hook", () => 
     type: 'stack',
   });
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(onPreventRemove).toBeCalledTimes(1);
@@ -669,7 +665,7 @@ it("prevents removing a grand child screen with 'usePreventRemove' hook", () => 
   shouldContinue = true;
 
   act(() => ref.current?.navigate('bar'));
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(4);
   expect(onStateChange).toBeCalledWith({
@@ -798,7 +794,7 @@ it("prevents removing by multiple screens with 'usePreventRemove' hook", () => {
   expect(onStateChange).toBeCalledTimes(1);
   expect(onStateChange).toBeCalledWith(preventedState);
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(1);
   expect(onPreventRemove.lex).toBeCalledTimes(1);
@@ -807,7 +803,7 @@ it("prevents removing by multiple screens with 'usePreventRemove' hook", () => {
 
   shouldContinue.lex = false;
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(1);
   expect(onPreventRemove.baz).toBeCalledTimes(1);
@@ -816,7 +812,7 @@ it("prevents removing by multiple screens with 'usePreventRemove' hook", () => {
 
   shouldContinue.baz = false;
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(1);
   expect(onPreventRemove.bar).toBeCalledTimes(1);
@@ -825,7 +821,7 @@ it("prevents removing by multiple screens with 'usePreventRemove' hook", () => {
 
   shouldContinue.bar = false;
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(onStateChange).toBeCalledWith({

@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { createNavigationContainerRef } from './createNavigationContainerRef';
+import createNavigationContainerRef from './createNavigationContainerRef';
 import type { NavigationContainerRefWithCurrent } from './types';
 
-export function useNavigationContainerRef<
+export default function useNavigationContainerRef<
   ParamList extends {} = ReactNavigation.RootParamList
 >(): NavigationContainerRefWithCurrent<ParamList> {
   const navigation =

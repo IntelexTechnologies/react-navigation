@@ -5,7 +5,7 @@ import type { RouteGroupConfig } from './types';
 /**
  * Empty component used for grouping screen configs.
  */
-export function Group<
+export default function Group<
   ParamList extends ParamListBase,
   ScreenOptions extends {}
 >(_: RouteGroupConfig<ParamList, ScreenOptions>) {

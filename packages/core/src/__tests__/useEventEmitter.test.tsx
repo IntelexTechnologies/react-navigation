@@ -2,14 +2,10 @@ import type { NavigationState, Router } from '@react-navigation/routers';
 import { act, render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import { BaseNavigationContainer } from '../BaseNavigationContainer';
-import { Screen } from '../Screen';
-import { useNavigationBuilder } from '../useNavigationBuilder';
-import { MockRouter, MockRouterKey } from './__fixtures__/MockRouter';
-
-beforeEach(() => {
-  MockRouterKey.current = 0;
-});
+import BaseNavigationContainer from '../BaseNavigationContainer';
+import Screen from '../Screen';
+import useNavigationBuilder from '../useNavigationBuilder';
+import MockRouter from './__fixtures__/MockRouter';
 
 it('fires focus and blur events in root navigator', () => {
   const TestNavigator = React.forwardRef((props: any, ref: any): any => {
@@ -269,7 +265,7 @@ it('fires focus and blur events in nested navigator', () => {
   expect(thirdFocusCallback).toBeCalledTimes(0);
   expect(fourthFocusCallback).toBeCalledTimes(1);
 
-  act(() => parent.current.navigate('nested', { screen: 'third' }));
+  act(() => parent.current.navigate('third'));
 
   expect(fourthBlurCallback).toBeCalledTimes(1);
   expect(thirdFocusCallback).toBeCalledTimes(1);
@@ -502,16 +498,16 @@ it('fires custom events added with addListener', () => {
   expect(thirdCallback.mock.calls[0][0].type).toBe('someSuperCoolEvent');
   expect(thirdCallback.mock.calls[0][0].data).toBe(42);
   expect(thirdCallback.mock.calls[0][0].target).toBe(target);
-  expect(thirdCallback.mock.calls[0][0].defaultPrevented).toBeUndefined();
-  expect(thirdCallback.mock.calls[0][0].preventDefault).toBeUndefined();
+  expect(thirdCallback.mock.calls[0][0].defaultPrevented).toBe(undefined);
+  expect(thirdCallback.mock.calls[0][0].preventDefault).toBe(undefined);
 
   act(() => {
     ref.current.navigation.emit({ type: eventName });
   });
 
-  expect(firstCallback.mock.calls[0][0].target).toBeUndefined();
-  expect(secondCallback.mock.calls[0][0].target).toBeUndefined();
-  expect(thirdCallback.mock.calls[1][0].target).toBeUndefined();
+  expect(firstCallback.mock.calls[0][0].target).toBe(undefined);
+  expect(secondCallback.mock.calls[0][0].target).toBe(undefined);
+  expect(thirdCallback.mock.calls[1][0].target).toBe(undefined);
 
   expect(firstCallback).toBeCalledTimes(1);
   expect(secondCallback).toBeCalledTimes(1);
@@ -634,14 +630,14 @@ it('fires custom events added with listeners prop', () => {
   expect(thirdCallback.mock.calls[0][0].type).toBe('someSuperCoolEvent');
   expect(thirdCallback.mock.calls[0][0].data).toBe(42);
   expect(thirdCallback.mock.calls[0][0].target).toBe(target);
-  expect(thirdCallback.mock.calls[0][0].defaultPrevented).toBeUndefined();
-  expect(thirdCallback.mock.calls[0][0].preventDefault).toBeUndefined();
+  expect(thirdCallback.mock.calls[0][0].defaultPrevented).toBe(undefined);
+  expect(thirdCallback.mock.calls[0][0].preventDefault).toBe(undefined);
 
   act(() => {
     ref.current.navigation.emit({ type: eventName });
   });
 
-  expect(firstCallback.mock.calls[0][0].target).toBeUndefined();
+  expect(firstCallback.mock.calls[0][0].target).toBe(undefined);
 
   expect(firstCallback).toBeCalledTimes(1);
   expect(secondCallback).toBeCalledTimes(0);
@@ -770,14 +766,14 @@ it('fires listeners when callback is provided for listeners prop', () => {
   expect(thirdCallback.mock.calls[0][0].type).toBe('someSuperCoolEvent');
   expect(thirdCallback.mock.calls[0][0].data).toBe(42);
   expect(thirdCallback.mock.calls[0][0].target).toBe(target);
-  expect(thirdCallback.mock.calls[0][0].defaultPrevented).toBeUndefined();
-  expect(thirdCallback.mock.calls[0][0].preventDefault).toBeUndefined();
+  expect(thirdCallback.mock.calls[0][0].defaultPrevented).toBe(undefined);
+  expect(thirdCallback.mock.calls[0][0].preventDefault).toBe(undefined);
 
   act(() => {
     ref.current.navigation.emit({ type: eventName });
   });
 
-  expect(firstCallback.mock.calls[0][0].target).toBeUndefined();
+  expect(firstCallback.mock.calls[0][0].target).toBe(undefined);
 
   expect(firstCallback).toBeCalledTimes(1);
   expect(secondCallback).toBeCalledTimes(0);
@@ -807,7 +803,7 @@ it('has option to prevent default', () => {
     expect(e.type).toBe('someSuperCoolEvent');
     expect(e.data).toBe(42);
     expect(e.defaultPrevented).toBe(false);
-    expect(e.preventDefault).toBeDefined();
+    expect(e.preventDefault).not.toBe(undefined);
 
     e.preventDefault();
 

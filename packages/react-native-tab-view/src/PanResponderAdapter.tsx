@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   Animated,
   GestureResponderEvent,
+  I18nManager,
   Keyboard,
   PanResponder,
   PanResponderGestureState,
@@ -17,7 +18,7 @@ import type {
   PagerProps,
   Route,
 } from './types';
-import { useAnimatedValue } from './useAnimatedValue';
+import useAnimatedValue from './useAnimatedValue';
 
 type Props<T extends Route> = PagerProps & {
   layout: Layout;
@@ -48,7 +49,7 @@ const DefaultTransitionSpec = {
   overshootClamping: true,
 };
 
-export function PanResponderAdapter<T extends Route>({
+export default function PanResponderAdapter<T extends Route>({
   layout,
   keyboardDismissMode = 'auto',
   swipeEnabled = true,
@@ -59,7 +60,6 @@ export function PanResponderAdapter<T extends Route>({
   children,
   style,
   animationEnabled = false,
-  layoutDirection = 'ltr',
 }: Props<T>) {
   const { routes, index } = navigationState;
 
@@ -147,8 +147,7 @@ export function PanResponderAdapter<T extends Route>({
       return false;
     }
 
-    const diffX =
-      layoutDirection === 'rtl' ? -gestureState.dx : gestureState.dx;
+    const diffX = I18nManager.isRTL ? -gestureState.dx : gestureState.dx;
 
     return (
       isMovingHorizontally(event, gestureState) &&
@@ -173,8 +172,7 @@ export function PanResponderAdapter<T extends Route>({
     _: GestureResponderEvent,
     gestureState: PanResponderGestureState
   ) => {
-    const diffX =
-      layoutDirection === 'rtl' ? -gestureState.dx : gestureState.dx;
+    const diffX = I18nManager.isRTL ? -gestureState.dx : gestureState.dx;
 
     if (
       // swiping left
@@ -224,7 +222,7 @@ export function PanResponderAdapter<T extends Route>({
         Math.min(
           Math.max(
             0,
-            layoutDirection === 'rtl'
+            I18nManager.isRTL
               ? currentIndex + gestureState.dx / Math.abs(gestureState.dx)
               : currentIndex - gestureState.dx / Math.abs(gestureState.dx)
           ),
@@ -283,7 +281,7 @@ export function PanResponderAdapter<T extends Route>({
       outputRange: [-maxTranslate, 0],
       extrapolate: 'clamp',
     }),
-    layoutDirection === 'rtl' ? -1 : 1
+    I18nManager.isRTL ? -1 : 1
   );
 
   const position = React.useMemo(

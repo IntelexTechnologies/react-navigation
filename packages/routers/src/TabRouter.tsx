@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid/non-secure';
 
-import { BaseRouter } from './BaseRouter';
+import BaseRouter from './BaseRouter';
 import type {
   CommonNavigationAction,
   DefaultRouterOptions,
@@ -139,7 +139,7 @@ const changeIndex = (
   };
 };
 
-export function TabRouter({
+export default function TabRouter({
   initialRouteName,
   backBehavior = 'firstRoute',
 }: TabRouterOptions) {
@@ -293,11 +293,18 @@ export function TabRouter({
     getStateForAction(state, action, { routeParamList, routeGetIdList }) {
       switch (action.type) {
         case 'JUMP_TO':
-        case 'NAVIGATE':
-        case 'NAVIGATE_DEPRECATED': {
-          const index = state.routes.findIndex(
-            (route) => route.name === action.payload.name
-          );
+        case 'NAVIGATE': {
+          let index = -1;
+
+          if (action.type === 'NAVIGATE' && action.payload.key) {
+            index = state.routes.findIndex(
+              (route) => route.key === action.payload.key
+            );
+          } else {
+            index = state.routes.findIndex(
+              (route) => route.name === action.payload.name
+            );
+          }
 
           if (index === -1) {
             return null;
@@ -306,8 +313,8 @@ export function TabRouter({
           return changeIndex(
             {
               ...state,
-              routes: state.routes.map((route) => {
-                if (route.name !== action.payload.name) {
+              routes: state.routes.map((route, i) => {
+                if (i !== index) {
                   return route;
                 }
 
@@ -324,8 +331,7 @@ export function TabRouter({
                 let params;
 
                 if (
-                  (action.type === 'NAVIGATE' ||
-                    action.type === 'NAVIGATE_DEPRECATED') &&
+                  action.type === 'NAVIGATE' &&
                   action.payload.merge &&
                   currentId === nextId
                 ) {
@@ -388,6 +394,10 @@ export function TabRouter({
         default:
           return BaseRouter.getStateForAction(state, action);
       }
+    },
+
+    shouldActionChangeFocus(action) {
+      return action.type === 'NAVIGATE';
     },
 
     actionCreators: TabActions,

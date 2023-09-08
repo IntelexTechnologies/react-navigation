@@ -1,4 +1,3 @@
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { HeaderBackground, useHeaderHeight } from '@react-navigation/elements';
 import { ParamListBase, useTheme } from '@react-navigation/native';
 import {
@@ -17,10 +16,11 @@ import {
   View,
 } from 'react-native';
 import { Appbar, Button } from 'react-native-paper';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Albums } from '../Shared/Albums';
-import { Article } from '../Shared/Article';
-import { BlurView } from '../Shared/BlurView';
+import Albums from '../Shared/Albums';
+import Article from '../Shared/Article';
+import BlurView from '../Shared/BlurView';
 
 type SimpleStackParams = {
   Article: { author: string };
@@ -85,7 +85,7 @@ const AlbumsScreen = ({ navigation }: StackScreenProps<SimpleStackParams>) => {
   );
 };
 
-const Stack = createStackNavigator<SimpleStackParams>();
+const SimpleStack = createStackNavigator<SimpleStackParams>();
 
 type Props = StackScreenProps<ParamListBase>;
 
@@ -108,7 +108,7 @@ function CustomHeader(props: StackHeaderProps) {
   );
 }
 
-export function StackHeaderCustomization({ navigation }: Props) {
+export default function HeaderCustomizationScreen({ navigation }: Props) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -119,8 +119,8 @@ export function StackHeaderCustomization({ navigation }: Props) {
   const [headerTitleCentered, setHeaderTitleCentered] = React.useState(true);
 
   return (
-    <Stack.Navigator screenOptions={{ headerMode: 'float' }}>
-      <Stack.Screen
+    <SimpleStack.Navigator screenOptions={{ headerMode: 'float' }}>
+      <SimpleStack.Screen
         name="Article"
         component={ArticleScreen}
         options={({ route }) => ({
@@ -154,7 +154,7 @@ export function StackHeaderCustomization({ navigation }: Props) {
         })}
         initialParams={{ author: 'Gandalf' }}
       />
-      <Stack.Screen
+      <SimpleStack.Screen
         name="Albums"
         component={AlbumsScreen}
         options={{
@@ -178,7 +178,7 @@ export function StackHeaderCustomization({ navigation }: Props) {
           ),
         }}
       />
-    </Stack.Navigator>
+    </SimpleStack.Navigator>
   );
 }
 

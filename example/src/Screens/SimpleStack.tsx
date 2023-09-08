@@ -1,7 +1,6 @@
 import type { ParamListBase } from '@react-navigation/native';
 import {
   createStackNavigator,
-  HeaderStyleInterpolators,
   StackNavigationOptions,
   StackScreenProps,
 } from '@react-navigation/stack';
@@ -9,9 +8,9 @@ import * as React from 'react';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
-import { Albums } from '../Shared/Albums';
-import { Article } from '../Shared/Article';
-import { NewsFeed } from '../Shared/NewsFeed';
+import Albums from '../Shared/Albums';
+import Article from '../Shared/Article';
+import NewsFeed from '../Shared/NewsFeed';
 
 export type SimpleStackParams = {
   Article: { author: string } | undefined;
@@ -34,13 +33,6 @@ const ArticleScreen = ({
           style={styles.button}
         >
           Replace with feed
-        </Button>
-        <Button
-          mode="contained"
-          onPress={() => navigation.popTo('Albums')}
-          style={styles.button}
-        >
-          Pop to Albums
         </Button>
         <Button
           mode="outlined"
@@ -123,9 +115,9 @@ const AlbumsScreen = ({
   );
 };
 
-const Stack = createStackNavigator<SimpleStackParams>();
+const SimpleStack = createStackNavigator<SimpleStackParams>();
 
-export function SimpleStack({
+export default function SimpleStackScreen({
   navigation,
   screenOptions,
 }: StackScreenProps<ParamListBase> & {
@@ -138,13 +130,8 @@ export function SimpleStack({
   }, [navigation]);
 
   return (
-    <Stack.Navigator
-      screenOptions={{
-        ...screenOptions,
-        headerStyleInterpolator: HeaderStyleInterpolators.forUIKit,
-      }}
-    >
-      <Stack.Screen
+    <SimpleStack.Navigator screenOptions={screenOptions}>
+      <SimpleStack.Screen
         name="Article"
         component={ArticleScreen}
         options={({ route }) => ({
@@ -152,17 +139,17 @@ export function SimpleStack({
         })}
         initialParams={{ author: 'Gandalf' }}
       />
-      <Stack.Screen
+      <SimpleStack.Screen
         name="NewsFeed"
         component={NewsFeedScreen}
         options={{ title: 'Feed' }}
       />
-      <Stack.Screen
+      <SimpleStack.Screen
         name="Albums"
         component={AlbumsScreen}
         options={{ title: 'Albums' }}
       />
-    </Stack.Navigator>
+    </SimpleStack.Navigator>
   );
 }
 

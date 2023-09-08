@@ -3,59 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-alpha.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@7.0.0-alpha.1...@react-navigation/drawer@7.0.0-alpha.2) (2023-06-22)
+## [6.6.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.6.2...@react-navigation/drawer@6.6.3) (2023-06-22)
 
 **Note:** Version bump only for package @react-navigation/drawer
 
-# [7.0.0-alpha.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@7.0.0-alpha.0...@react-navigation/drawer@7.0.0-alpha.1) (2023-03-01)
+## [6.6.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.6.1...@react-navigation/drawer@6.6.2) (2023-02-26)
 
 ### Bug Fixes
 
-* fix paths in sourcemap files ([368e069](https://github.com/react-navigation/react-navigation/commit/368e0691b9fb07d4b1cbe71cfe4c2f40512f93ad)) - by @satya164
+* fix paths in sourcemap files ([42c906d](https://github.com/react-navigation/react-navigation/commit/42c906d77d0235f7b3733c783308863ec686a54e)) - by @
 
-### Features
+## [6.6.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.6.0...@react-navigation/drawer@6.6.1) (2023-02-23)
 
-* add ability to customize the fonts with the theme ([#11243](https://github.com/react-navigation/react-navigation/issues/11243)) ([1cd6836](https://github.com/react-navigation/react-navigation/commit/1cd6836f1d10bcdf7f96d9e4b9f7de0ddea9391f)) - by @satya164
-* add gesture and transition events to drawer ([#11240](https://github.com/react-navigation/react-navigation/issues/11240)) ([50b94e4](https://github.com/react-navigation/react-navigation/commit/50b94e4f9518975b4fc7b46fe14d387bd9b17c7e)) - by @BeeMargarida
+**Note:** Version bump only for package @react-navigation/drawer
 
-# [7.0.0-alpha.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.5.1...@react-navigation/drawer@7.0.0-alpha.0) (2023-02-17)
+# [6.6.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.5.8...@react-navigation/drawer@6.6.0) (2023-02-14)
 
 ### Bug Fixes
 
-* added close drawer accessibility tap area ([#11184](https://github.com/react-navigation/react-navigation/issues/11184)) ([20ec204](https://github.com/react-navigation/react-navigation/commit/20ec2042b9d3c22388682c16fca4ef23e91ee011)) - by @mikegarfinkle
-* drawerstatuscontext should be exported ([#11041](https://github.com/react-navigation/react-navigation/issues/11041)) ([6e4cb06](https://github.com/react-navigation/react-navigation/commit/6e4cb06cc0e3de4d5fb3b8f2051f09fdc8aec53e)) - by @leonchabbey
-* fix overlay not receiving clicks on web ([666c8db](https://github.com/react-navigation/react-navigation/commit/666c8dbad8f8d04b1c252f0b86e234b4a1133039)) - by @satya164
-
-### Code Refactoring
-
-* drop react-native-flipper-plugin ([643b8e8](https://github.com/react-navigation/react-navigation/commit/643b8e83b7eeb119b0a339fd8866d790d3178f50)), closes [/github.com/react-native-community/discussions-and-proposals/discussions/546#discussioncomment-4178951](https://github.com//github.com/react-native-community/discussions-and-proposals/discussions/546/issues/discussioncomment-4178951) - by @satya164
-
-* refactor!: improve the API for Link component ([7f35837](https://github.com/react-navigation/react-navigation/commit/7f3583793ad17475531e155f1f433ffa16547015)) - by @satya164
+* added close drawer accessibility tap area ([#11184](https://github.com/react-navigation/react-navigation/issues/11184)) ([061fb13](https://github.com/react-navigation/react-navigation/commit/061fb13273686bc5337442f1026ae426399b9808)) - by @mikegarfinkle
 
 ### Features
 
-* add testID and accessibilityLabel to DrawerItem ([#11168](https://github.com/react-navigation/react-navigation/issues/11168)) ([4471fa0](https://github.com/react-navigation/react-navigation/commit/4471fa035dbd79d984888866791c34937693814d)) - by @andrewtremblay
-* extract drawer to a separate package ([58b7cae](https://github.com/react-navigation/react-navigation/commit/58b7caeaad00eafbcda36561e75e538e0f02c4af)) - by @satya164
+* add testID and accessibilityLabel to DrawerItem ([#11168](https://github.com/react-navigation/react-navigation/issues/11168)) ([99ff9f7](https://github.com/react-navigation/react-navigation/commit/99ff9f7b92f6bb1ac32bc6c7482ae1faffec4ae8)) - by @andrewtremblay
 
-### BREAKING CHANGES
+## [6.5.8](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.5.7...@react-navigation/drawer@6.5.8) (2023-01-31)
 
-* Initially the `Link` component was designed to work with path strings via the `to` prop. But it has few issues:
+**Note:** Version bump only for package @react-navigation/drawer
 
-- The path strings are not type-safe, making it easy to cause typos and bugs after
-refactor
-- The API made navigating via screen name more incovenient, even if that's the preferred approach
+## [6.5.7](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.5.6...@react-navigation/drawer@6.5.7) (2023-01-10)
 
-This revamps the API of the `Link` component to make it easier to use. Instead of `to` prop, it now accepts `screen` and `params` props, as well as an optional `href` prop to
-use instead of the generated path.
+**Note:** Version bump only for package @react-navigation/drawer
 
-e.g.:
+## [6.5.6](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.5.5...@react-navigation/drawer@6.5.6) (2022-12-16)
 
-```js
-<Link screen="Details" params={{ foo: 42 }}>Go to Details</Link>
-```
+### Bug Fixes
 
-This also drops the `useLinkTo` hook and consolidates into the `useLinkTools` hook - which lets us build a `href` for a screen or action for a path.
-* React Native team is focusing on migrating away from Flipper. So it doesn't make much sense for us to spend additional resources to support the Flipper plugin.
+* fix drawer toggle race condition ([#11036](https://github.com/react-navigation/react-navigation/issues/11036)) ([388b02f](https://github.com/react-navigation/react-navigation/commit/388b02f2f7cad3e7d25d439a115ea9f506bb7fc0)) - by @ricmatsui
+
+## [6.5.5](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.5.4...@react-navigation/drawer@6.5.5) (2022-12-12)
+
+### Bug Fixes
+
+* fix overlay not receiving clicks on web ([6e120f6](https://github.com/react-navigation/react-navigation/commit/6e120f6f1ab5fb2f697e2b8734692eadc21e7411)) - by @satya164
+
+## [6.5.4](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.5.3...@react-navigation/drawer@6.5.4) (2022-12-07)
+
+### Bug Fixes
+
+* drawerstatuscontext should be exported ([#11041](https://github.com/react-navigation/react-navigation/issues/11041)) ([b3722fd](https://github.com/react-navigation/react-navigation/commit/b3722fd19958be5b1becd110306cb98a5e8f5cb4)) - by @leonchabbey
+
+## [6.5.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.5.1...@react-navigation/drawer@6.5.3) (2022-11-29)
+
+**Note:** Version bump only for package @react-navigation/drawer
 
 ## [6.5.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/drawer@6.5.0...@react-navigation/drawer@6.5.1) (2022-11-21)
 

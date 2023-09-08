@@ -3,46 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-alpha.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@7.0.0-alpha.1...@react-navigation/bottom-tabs@7.0.0-alpha.2) (2023-06-22)
+## [6.5.8](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.5.7...@react-navigation/bottom-tabs@6.5.8) (2023-06-22)
 
 **Note:** Version bump only for package @react-navigation/bottom-tabs
 
-# [7.0.0-alpha.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@7.0.0-alpha.0...@react-navigation/bottom-tabs@7.0.0-alpha.1) (2023-03-01)
+## [6.5.7](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.5.6...@react-navigation/bottom-tabs@6.5.7) (2023-02-26)
 
 ### Bug Fixes
 
-* fix paths in sourcemap files ([368e069](https://github.com/react-navigation/react-navigation/commit/368e0691b9fb07d4b1cbe71cfe4c2f40512f93ad)) - by @satya164
+* fix paths in sourcemap files ([42c906d](https://github.com/react-navigation/react-navigation/commit/42c906d77d0235f7b3733c783308863ec686a54e)) - by @
+
+## [6.5.6](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.5.5...@react-navigation/bottom-tabs@6.5.6) (2023-02-23)
+
+**Note:** Version bump only for package @react-navigation/bottom-tabs
+
+## [6.5.5](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.5.4...@react-navigation/bottom-tabs@6.5.5) (2023-02-14)
+
+**Note:** Version bump only for package @react-navigation/bottom-tabs
+
+## [6.5.4](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.5.3...@react-navigation/bottom-tabs@6.5.4) (2023-01-31)
+
+**Note:** Version bump only for package @react-navigation/bottom-tabs
+
+## [6.5.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.5.2...@react-navigation/bottom-tabs@6.5.3) (2023-01-10)
+
+**Note:** Version bump only for package @react-navigation/bottom-tabs
+
+## [6.5.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.5.1...@react-navigation/bottom-tabs@6.5.2) (2022-12-16)
+
+**Note:** Version bump only for package @react-navigation/bottom-tabs
+
+## [6.5.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.5.0...@react-navigation/bottom-tabs@6.5.1) (2022-12-12)
+
+**Note:** Version bump only for package @react-navigation/bottom-tabs
+
+# [6.5.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.4.3...@react-navigation/bottom-tabs@6.5.0) (2022-12-07)
 
 ### Features
 
-* add ability to customize the fonts with the theme ([#11243](https://github.com/react-navigation/react-navigation/issues/11243)) ([1cd6836](https://github.com/react-navigation/react-navigation/commit/1cd6836f1d10bcdf7f96d9e4b9f7de0ddea9391f)) - by @satya164
+* expose the original label in children prop for custom label functions in tab navigators ([417cb56](https://github.com/react-navigation/react-navigation/commit/417cb566c3c5304a0f5ebf4f32d0d42e5d1ca0f6)) - by @satya164
 
-# [7.0.0-alpha.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.4.1...@react-navigation/bottom-tabs@7.0.0-alpha.0) (2023-02-17)
+## [6.4.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.4.1...@react-navigation/bottom-tabs@6.4.3) (2022-11-29)
 
-* refactor!: improve the API for Link component ([7f35837](https://github.com/react-navigation/react-navigation/commit/7f3583793ad17475531e155f1f433ffa16547015)) - by @satya164
-
-### Features
-
-* expose the original label in children prop for custom label functions in tab navigators ([a6fd49f](https://github.com/react-navigation/react-navigation/commit/a6fd49f9af9353cf5fd5364feafcbeea25c3ff7f)) - by @satya164
-
-### BREAKING CHANGES
-
-* Initially the `Link` component was designed to work with path strings via the `to` prop. But it has few issues:
-
-- The path strings are not type-safe, making it easy to cause typos and bugs after
-refactor
-- The API made navigating via screen name more incovenient, even if that's the preferred approach
-
-This revamps the API of the `Link` component to make it easier to use. Instead of `to` prop, it now accepts `screen` and `params` props, as well as an optional `href` prop to
-use instead of the generated path.
-
-e.g.:
-
-```js
-<Link screen="Details" params={{ foo: 42 }}>Go to Details</Link>
-```
-
-This also drops the `useLinkTo` hook and consolidates into the `useLinkTools` hook - which lets us build a `href` for a screen or action for a path.
+**Note:** Version bump only for package @react-navigation/bottom-tabs
 
 ## [6.4.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/bottom-tabs@6.4.0...@react-navigation/bottom-tabs@6.4.1) (2022-11-21)
 

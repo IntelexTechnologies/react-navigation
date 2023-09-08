@@ -3,19 +3,17 @@ import {
   NavigationState,
   ParamListBase,
   Router,
-  StackActions,
   StackRouter,
 } from '@react-navigation/routers';
 import { act, render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import { BaseNavigationContainer } from '../BaseNavigationContainer';
-import { createNavigationContainerRef } from '../createNavigationContainerRef';
-import { Screen } from '../Screen';
-import { useNavigationBuilder } from '../useNavigationBuilder';
-import {
+import BaseNavigationContainer from '../BaseNavigationContainer';
+import createNavigationContainerRef from '../createNavigationContainerRef';
+import Screen from '../Screen';
+import useNavigationBuilder from '../useNavigationBuilder';
+import MockRouter, {
   MockActions,
-  MockRouter,
   MockRouterKey,
 } from './__fixtures__/MockRouter';
 
@@ -192,7 +190,6 @@ it("lets children handle the action if parent didn't", () => {
 
   const element = (
     <BaseNavigationContainer
-      navigationInChildEnabled
       initialState={initialState}
       onStateChange={onStateChange}
     >
@@ -241,7 +238,7 @@ it("lets children handle the action if parent didn't", () => {
   });
 });
 
-it('action goes to correct parent navigator if target is specified', () => {
+it('action goes to correct navigator if target is specified', () => {
   function CurrentTestRouter(options: DefaultRouterOptions) {
     const CurrentMockRouter = MockRouter(options);
     const TestRouter: Router<
@@ -268,7 +265,20 @@ it('action goes to correct parent navigator if target is specified', () => {
     return TestRouter;
   }
 
-  const TestNavigator = (props: any) => {
+  const ChildNavigator = (props: any) => {
+    const { state, descriptors } = useNavigationBuilder(
+      CurrentTestRouter,
+      props
+    );
+
+    return (
+      <React.Fragment>
+        {state.routes.map((route) => descriptors[route.key].render())}
+      </React.Fragment>
+    );
+  };
+
+  const ParentNavigator = (props: any) => {
     const { state, descriptors } = useNavigationBuilder(
       CurrentTestRouter,
       props
@@ -323,18 +333,18 @@ it('action goes to correct parent navigator if target is specified', () => {
       initialState={initialState}
       onStateChange={onStateChange}
     >
-      <TestNavigator>
+      <ParentNavigator>
         <Screen name="foo">{() => null}</Screen>
         <Screen name="bar">{() => null}</Screen>
         <Screen name="baz">
           {() => (
-            <TestNavigator>
+            <ChildNavigator>
               <Screen name="qux">{() => null}</Screen>
               <Screen name="lex" component={TestScreen} />
-            </TestNavigator>
+            </ChildNavigator>
           )}
         </Screen>
-      </TestNavigator>
+      </ParentNavigator>
     </BaseNavigationContainer>
   );
 
@@ -345,133 +355,6 @@ it('action goes to correct parent navigator if target is specified', () => {
     stale: false,
     type: 'test',
     index: 1,
-    key: '0',
-    routeNames: ['foo', 'bar', 'baz'],
-    routes: [
-      { key: 'foo', name: 'foo' },
-      { key: 'bar', name: 'bar' },
-      {
-        key: 'baz',
-        name: 'baz',
-        state: {
-          stale: false,
-          type: 'test',
-          index: 0,
-          key: '1',
-          routeNames: ['qux', 'lex'],
-          routes: [
-            { key: 'lex', name: 'lex' },
-            { key: 'qux', name: 'qux' },
-          ],
-        },
-      },
-    ],
-  });
-});
-
-it('action goes to correct child navigator if target is specified', () => {
-  function CurrentTestRouter(options: DefaultRouterOptions) {
-    const CurrentMockRouter = MockRouter(options);
-    const TestRouter: Router<
-      NavigationState,
-      MockActions | { type: 'REVERSE' }
-    > = {
-      ...CurrentMockRouter,
-
-      shouldActionChangeFocus() {
-        return true;
-      },
-
-      getStateForAction(state, action, options) {
-        if (action.type === 'REVERSE') {
-          return {
-            ...state,
-            routes: state.routes.slice().reverse(),
-          };
-        }
-
-        return CurrentMockRouter.getStateForAction(state, action, options);
-      },
-    };
-    return TestRouter;
-  }
-
-  const TestNavigator = (props: any) => {
-    const { state, descriptors } = useNavigationBuilder(
-      CurrentTestRouter,
-      props
-    );
-
-    return (
-      <React.Fragment>
-        {state.routes.map((route) => descriptors[route.key].render())}
-      </React.Fragment>
-    );
-  };
-
-  const initialState = {
-    stale: false,
-    type: 'test',
-    index: 0,
-    key: '0',
-    routeNames: ['foo', 'bar', 'baz'],
-    routes: [
-      { key: 'foo', name: 'foo' },
-      { key: 'bar', name: 'bar' },
-      {
-        key: 'baz',
-        name: 'baz',
-        state: {
-          stale: false,
-          type: 'test',
-          index: 0,
-          key: '1',
-          routeNames: ['qux', 'lex'],
-          routes: [
-            { key: 'qux', name: 'qux' },
-            { key: 'lex', name: 'lex' },
-          ],
-        },
-      },
-    ],
-  };
-
-  const onStateChange = jest.fn();
-
-  const ref = createNavigationContainerRef<ParamListBase>();
-
-  const element = (
-    <BaseNavigationContainer
-      ref={ref}
-      initialState={initialState}
-      onStateChange={onStateChange}
-    >
-      <TestNavigator>
-        <Screen name="foo">{() => null}</Screen>
-        <Screen name="bar">{() => null}</Screen>
-        <Screen name="baz">
-          {() => (
-            <TestNavigator>
-              <Screen name="qux">{() => null}</Screen>
-              <Screen name="lex">{() => null}</Screen>
-            </TestNavigator>
-          )}
-        </Screen>
-      </TestNavigator>
-    </BaseNavigationContainer>
-  );
-
-  render(element).update(element);
-
-  act(() => {
-    ref.dispatch({ type: 'REVERSE', target: '1' });
-  });
-
-  expect(onStateChange).toBeCalledTimes(1);
-  expect(onStateChange).toBeCalledWith({
-    stale: false,
-    type: 'test',
-    index: 2,
     key: '0',
     routeNames: ['foo', 'bar', 'baz'],
     routes: [
@@ -738,7 +621,7 @@ it("prevents removing a screen with 'beforeRemove' event", () => {
     type: 'stack',
   });
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(onBeforeRemove).toBeCalledTimes(1);
@@ -758,7 +641,7 @@ it("prevents removing a screen with 'beforeRemove' event", () => {
 
   shouldPrevent = false;
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(3);
   expect(onStateChange).toBeCalledWith({
@@ -888,7 +771,7 @@ it("prevents removing a child screen with 'beforeRemove' event", () => {
     type: 'stack',
   });
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(onBeforeRemove).toBeCalledTimes(1);
@@ -919,7 +802,7 @@ it("prevents removing a child screen with 'beforeRemove' event", () => {
 
   shouldPrevent = false;
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(3);
   expect(onStateChange).toBeCalledWith({
@@ -1067,7 +950,7 @@ it("prevents removing a grand child screen with 'beforeRemove' event", () => {
     type: 'stack',
   });
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(onBeforeRemove).toBeCalledTimes(1);
@@ -1111,7 +994,7 @@ it("prevents removing a grand child screen with 'beforeRemove' event", () => {
 
   shouldPrevent = false;
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(3);
   expect(onStateChange).toBeCalledWith({
@@ -1258,7 +1141,7 @@ it("prevents removing by multiple screens with 'beforeRemove' event", () => {
   expect(onStateChange).toBeCalledTimes(1);
   expect(onStateChange).toBeCalledWith(preventedState);
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(1);
   expect(onBeforeRemove.lex).toBeCalledTimes(1);
@@ -1267,7 +1150,7 @@ it("prevents removing by multiple screens with 'beforeRemove' event", () => {
 
   shouldPrevent.lex = false;
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(1);
   expect(onBeforeRemove.baz).toBeCalledTimes(1);
@@ -1276,7 +1159,7 @@ it("prevents removing by multiple screens with 'beforeRemove' event", () => {
 
   shouldPrevent.baz = false;
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(1);
   expect(onBeforeRemove.bar).toBeCalledTimes(1);
@@ -1285,7 +1168,7 @@ it("prevents removing by multiple screens with 'beforeRemove' event", () => {
 
   shouldPrevent.bar = false;
 
-  act(() => ref.current?.dispatch(StackActions.popTo('foo')));
+  act(() => ref.current?.navigate('foo'));
 
   expect(onStateChange).toBeCalledTimes(2);
   expect(onStateChange).toBeCalledWith({

@@ -63,7 +63,7 @@ const removeEventListener = (type: 'popstate', listener: () => void) => {
   }
 };
 
-export const window = {
+const window = {
   document: { title: '' },
   location,
   history,
@@ -73,3 +73,5 @@ export const window = {
     return window;
   },
 };
+
+export default window;

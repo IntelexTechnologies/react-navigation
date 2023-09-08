@@ -2,15 +2,11 @@ import type { NavigationState, ParamListBase } from '@react-navigation/routers';
 import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import { BaseNavigationContainer } from '../BaseNavigationContainer';
-import { createNavigationContainerRef } from '../createNavigationContainerRef';
-import { Screen } from '../Screen';
-import { useNavigationBuilder } from '../useNavigationBuilder';
-import { MockRouter, MockRouterKey } from './__fixtures__/MockRouter';
-
-beforeEach(() => {
-  MockRouterKey.current = 0;
-});
+import BaseNavigationContainer from '../BaseNavigationContainer';
+import createNavigationContainerRef from '../createNavigationContainerRef';
+import Screen from '../Screen';
+import useNavigationBuilder from '../useNavigationBuilder';
+import MockRouter from './__fixtures__/MockRouter';
 
 it('adds the listener even if container is mounted later', () => {
   const ref = createNavigationContainerRef<ParamListBase>();

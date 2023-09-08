@@ -1,8 +1,16 @@
 import { getHeaderTitle, HeaderTitle } from '@react-navigation/elements';
-import { Route, useLocale, useTheme } from '@react-navigation/native';
+import { Route, useTheme } from '@react-navigation/native';
 import * as React from 'react';
-import { Platform, StyleSheet, TextStyle, View } from 'react-native';
 import {
+  I18nManager,
+  Platform,
+  StyleSheet,
+  TextStyle,
+  View,
+} from 'react-native';
+import {
+  // @ts-expect-error: Available since react-native-screens v3.21
+  isNewBackTitleImplementation,
   isSearchBarAvailableForCurrentPlatform,
   ScreenStackHeaderBackButtonImage,
   ScreenStackHeaderCenterView,
@@ -23,7 +31,7 @@ type Props = NativeStackNavigationOptions & {
   canGoBack: boolean;
 };
 
-export function HeaderConfig({
+export default function HeaderConfig({
   headerHeight,
   headerBackImageSource,
   headerBackButtonMenuEnabled,
@@ -53,23 +61,15 @@ export function HeaderConfig({
   title,
   canGoBack,
 }: Props): JSX.Element {
-  const { direction } = useLocale();
-  const { colors, fonts } = useTheme();
+  const { colors } = useTheme();
   const tintColor =
     headerTintColor ?? (Platform.OS === 'ios' ? colors.primary : colors.text);
 
   const headerBackTitleStyleFlattened =
-    StyleSheet.flatten([headerBackTitleStyle, fonts.regular]) || {};
+    StyleSheet.flatten(headerBackTitleStyle) || {};
   const headerLargeTitleStyleFlattened =
-    StyleSheet.flatten([
-      headerLargeTitleStyle,
-      Platform.select({ ios: fonts.heavy, default: fonts.medium }),
-    ]) || {};
-  const headerTitleStyleFlattened =
-    StyleSheet.flatten([
-      headerTitleStyle,
-      Platform.select({ ios: fonts.bold, default: fonts.medium }),
-    ]) || {};
+    StyleSheet.flatten(headerLargeTitleStyle) || {};
+  const headerTitleStyleFlattened = StyleSheet.flatten(headerTitleStyle) || {};
   const headerStyleFlattened = StyleSheet.flatten(headerStyle) || {};
   const headerLargeStyleFlattened = StyleSheet.flatten(headerLargeStyle) || {};
 
@@ -80,32 +80,11 @@ export function HeaderConfig({
       headerTitleStyleFlattened.fontFamily,
     ]);
 
-  const backTitleFontSize =
-    'fontSize' in headerBackTitleStyleFlattened
-      ? headerBackTitleStyleFlattened.fontSize
-      : undefined;
-
   const titleText = getHeaderTitle({ title, headerTitle }, route.name);
   const titleColor =
-    'color' in headerTitleStyleFlattened
-      ? headerTitleStyleFlattened.color
-      : headerTintColor ?? colors.text;
-  const titleFontSize =
-    'fontSize' in headerTitleStyleFlattened
-      ? headerTitleStyleFlattened.fontSize
-      : undefined;
+    headerTitleStyleFlattened.color ?? headerTintColor ?? colors.text;
+  const titleFontSize = headerTitleStyleFlattened.fontSize;
   const titleFontWeight = headerTitleStyleFlattened.fontWeight;
-
-  const largeTitleBackgroundColor = headerLargeStyleFlattened.backgroundColor;
-  const largeTitleColor =
-    'color' in headerLargeTitleStyleFlattened
-      ? headerLargeTitleStyleFlattened.color
-      : undefined;
-  const largeTitleFontSize =
-    'fontSize' in headerLargeTitleStyleFlattened
-      ? headerLargeTitleStyleFlattened.fontSize
-      : undefined;
-  const largeTitleFontWeight = headerLargeTitleStyleFlattened.fontWeight;
 
   const headerTitleStyleSupported: TextStyle = { color: titleColor };
 
@@ -120,12 +99,6 @@ export function HeaderConfig({
   if (titleFontWeight != null) {
     headerTitleStyleSupported.fontWeight = titleFontWeight;
   }
-
-  const headerBackgroundColor =
-    headerStyleFlattened.backgroundColor ??
-    (headerBackground != null || headerTransparent
-      ? 'transparent'
-      : colors.card);
 
   const headerLeftElement = headerLeft?.({
     tintColor,
@@ -191,13 +164,24 @@ export function HeaderConfig({
       ) : null}
       <ScreenStackHeaderConfig
         backButtonInCustomView={backButtonInCustomView}
-        backgroundColor={headerBackgroundColor}
-        backTitle={headerBackTitleVisible ? headerBackTitle : ' '}
+        backgroundColor={
+          headerStyleFlattened.backgroundColor ??
+          (headerBackground != null || headerTransparent
+            ? 'transparent'
+            : colors.card)
+        }
+        backTitle={
+          isNewBackTitleImplementation || headerBackTitleVisible
+            ? headerBackTitle
+            : ' '
+        }
+        // @ts-expect-error: Available since react-native-screens v3.21
+        backTitleVisible={headerBackTitleVisible}
         backTitleFontFamily={backTitleFontFamily}
-        backTitleFontSize={backTitleFontSize}
+        backTitleFontSize={headerBackTitleStyleFlattened.fontSize}
         blurEffect={headerBlurEffect}
         color={tintColor}
-        direction={direction}
+        direction={I18nManager.getConstants().isRTL ? 'rtl' : 'ltr'}
         disableBackButtonMenu={headerBackButtonMenuEnabled === false}
         hidden={headerShown === false}
         hideBackButton={headerBackVisible === false}
@@ -207,11 +191,11 @@ export function HeaderConfig({
           (headerTransparent && headerShadowVisible !== true)
         }
         largeTitle={headerLargeTitle}
-        largeTitleBackgroundColor={largeTitleBackgroundColor}
-        largeTitleColor={largeTitleColor}
+        largeTitleBackgroundColor={headerLargeStyleFlattened.backgroundColor}
+        largeTitleColor={headerLargeTitleStyleFlattened.color}
         largeTitleFontFamily={largeTitleFontFamily}
-        largeTitleFontSize={largeTitleFontSize}
-        largeTitleFontWeight={largeTitleFontWeight}
+        largeTitleFontSize={headerLargeTitleStyleFlattened.fontSize}
+        largeTitleFontWeight={headerLargeTitleStyleFlattened.fontWeight}
         largeTitleHideShadow={headerLargeTitleShadowVisible === false}
         title={titleText}
         titleColor={titleColor}

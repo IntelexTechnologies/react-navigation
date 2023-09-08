@@ -3,64 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-alpha.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@7.0.0-alpha.1...@react-navigation/native@7.0.0-alpha.2) (2023-06-22)
+## [6.1.7](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.1.6...@react-navigation/native@6.1.7) (2023-06-22)
 
-### Features
+**Note:** Version bump only for package @react-navigation/native
 
-* support a top-level path configuration in linking config ([1d0297e](https://github.com/react-navigation/react-navigation/commit/1d0297ed17788c01d7b901ad04b63d3f37f47266)) - by @satya164
-
-# [7.0.0-alpha.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@7.0.0-alpha.0...@react-navigation/native@7.0.0-alpha.1) (2023-03-01)
+## [6.1.6](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.1.5...@react-navigation/native@6.1.6) (2023-02-26)
 
 ### Bug Fixes
 
-* fix paths in sourcemap files ([368e069](https://github.com/react-navigation/react-navigation/commit/368e0691b9fb07d4b1cbe71cfe4c2f40512f93ad)) - by @satya164
+* fix paths in sourcemap files ([42c906d](https://github.com/react-navigation/react-navigation/commit/42c906d77d0235f7b3733c783308863ec686a54e)) - by @
 
-### Features
+## [6.1.5](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.1.4...@react-navigation/native@6.1.5) (2023-02-23)
 
-* add ability to customize the fonts with the theme ([#11243](https://github.com/react-navigation/react-navigation/issues/11243)) ([1cd6836](https://github.com/react-navigation/react-navigation/commit/1cd6836f1d10bcdf7f96d9e4b9f7de0ddea9391f)) - by @satya164
+**Note:** Version bump only for package @react-navigation/native
 
-# [7.0.0-alpha.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.0.14...@react-navigation/native@7.0.0-alpha.0) (2023-02-17)
+## [6.1.4](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.1.3...@react-navigation/native@6.1.4) (2023-02-14)
 
 ### Bug Fixes
 
-* add `ScrollView` type to 'getScrollResponder' ([#11112](https://github.com/react-navigation/react-navigation/issues/11112)) ([f4324cd](https://github.com/react-navigation/react-navigation/commit/f4324cdbb50218bed30abf673f5070e20e2d7db8)) - by @ken0nek
-* don't modify browser history on re-render ([ab66777](https://github.com/react-navigation/react-navigation/commit/ab66777c092fae3d28c9c8381aeb5b92945ca256)) - by @satya164
-* keep hash/fragment section un URLs on web ([#11078](https://github.com/react-navigation/react-navigation/issues/11078)) ([a30daa0](https://github.com/react-navigation/react-navigation/commit/a30daa07fb667389420d78590757914487e32c19)) - by @nikgraf
+* add `ScrollView` type to 'getScrollResponder' ([#11112](https://github.com/react-navigation/react-navigation/issues/11112)) ([bb3b849](https://github.com/react-navigation/react-navigation/commit/bb3b849c0765287bc52a8ee2b8afda6edb49fd7c)) - by @ken0nek
 
-* refactor!: improve the API for Link component ([7f35837](https://github.com/react-navigation/react-navigation/commit/7f3583793ad17475531e155f1f433ffa16547015)) - by @satya164
-* fix!: align onReady callback and navigationRef.isReady ([1959baa](https://github.com/react-navigation/react-navigation/commit/1959baa97c101712db84905827f13a8a78a42ca7)) - by @satya164
+## [6.1.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.1.2...@react-navigation/native@6.1.3) (2023-01-31)
+
+### Bug Fixes
+
+* don't modify browser history on re-render ([79d8dc1](https://github.com/react-navigation/react-navigation/commit/79d8dc107aaadf4923024f8b122c0b55e1079706)) - by @satya164
+
+## [6.1.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.1.1...@react-navigation/native@6.1.2) (2023-01-10)
+
+**Note:** Version bump only for package @react-navigation/native
+
+## [6.1.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.1.0...@react-navigation/native@6.1.1) (2022-12-12)
+
+**Note:** Version bump only for package @react-navigation/native
+
+# [6.1.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.0.16...@react-navigation/native@6.1.0) (2022-12-07)
+
+### Bug Fixes
+
+* keep hash/fragment section un URLs on web ([#11078](https://github.com/react-navigation/react-navigation/issues/11078)) ([31cb2a2](https://github.com/react-navigation/react-navigation/commit/31cb2a2420f2a1c46c27e7e75cb75db5cb026b03)) - by @nikgraf
 
 ### Features
 
-* make useScrollToTop work when nesting multiple tab navigators ([#11063](https://github.com/react-navigation/react-navigation/issues/11063)) ([dce463a](https://github.com/react-navigation/react-navigation/commit/dce463a0e39b21509670b5c1d0cab933aa9e4962)), closes [/github.com/react-navigation/react-navigation/pull/9434#issuecomment-1328345015](https://github.com//github.com/react-navigation/react-navigation/pull/9434/issues/issuecomment-1328345015) - by @anthonyguay
-* support statically confguring navigation tree ([#11144](https://github.com/react-navigation/react-navigation/issues/11144)) ([4cc322e](https://github.com/react-navigation/react-navigation/commit/4cc322e08b3d6fe089710c9c6869bbdc183c2bd6)) - by @satya164
+* make useScrollToTop work when nesting multiple tab navigators ([#11063](https://github.com/react-navigation/react-navigation/issues/11063)) ([e391595](https://github.com/react-navigation/react-navigation/commit/e391595bf937f166abdb1f7958bc831c2832afc2)), closes [/github.com/react-navigation/react-navigation/pull/9434#issuecomment-1328345015](https://github.com//github.com/react-navigation/react-navigation/pull/9434/issues/issuecomment-1328345015) - by @anthonyguay
 
-### BREAKING CHANGES
+## [6.0.16](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.0.14...@react-navigation/native@6.0.16) (2022-11-29)
 
-* Initially the `Link` component was designed to work with path strings via the `to` prop. But it has few issues:
-
-- The path strings are not type-safe, making it easy to cause typos and bugs after
-refactor
-- The API made navigating via screen name more incovenient, even if that's the preferred approach
-
-This revamps the API of the `Link` component to make it easier to use. Instead of `to` prop, it now accepts `screen` and `params` props, as well as an optional `href` prop to
-use instead of the generated path.
-
-e.g.:
-
-```js
-<Link screen="Details" params={{ foo: 42 }}>Go to Details</Link>
-```
-
-This also drops the `useLinkTo` hook and consolidates into the `useLinkTools` hook - which lets us build a `href` for a screen or action for a path.
-* Previously, the `onReady` prop and `navigationRef.isReady()` work slightly
-differently. The
-`onReady` callback fired when `NavigationContainer` finishes mounting and deep links is resolved.
-The `navigationRef.isReady()` method additionally checks if there are any navigators rendered - which may not be `true` if the user is rendering their navigators conditionally inside a
-`NavigationContainer`.
-
-This changes `onReady` to work similar to `navigationRef.isReady()`. The `onReady` callback will now fire only when there are navigators rendered - reflecting the value of
-`navigationRef.isReady()`.
+**Note:** Version bump only for package @react-navigation/native
 
 ## [6.0.14](https://github.com/react-navigation/react-navigation/compare/@react-navigation/native@6.0.13...@react-navigation/native@6.0.14) (2022-11-21)
 

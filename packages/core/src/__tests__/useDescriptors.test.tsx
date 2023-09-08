@@ -6,20 +6,17 @@ import type {
 import { act, render } from '@testing-library/react-native';
 import * as React from 'react';
 
-import { BaseNavigationContainer } from '../BaseNavigationContainer';
-import { Screen } from '../Screen';
-import { useNavigationBuilder } from '../useNavigationBuilder';
-import {
+import BaseNavigationContainer from '../BaseNavigationContainer';
+import Screen from '../Screen';
+import useNavigationBuilder from '../useNavigationBuilder';
+import MockRouter, {
   MockActions,
-  MockRouter,
   MockRouterKey,
 } from './__fixtures__/MockRouter';
 
 jest.useFakeTimers();
 
-beforeEach(() => {
-  MockRouterKey.current = 0;
-});
+beforeEach(() => (MockRouterKey.current = 0));
 
 it('sets options with options prop as an object', () => {
   const TestNavigator = (props: any) => {
@@ -154,25 +151,25 @@ it('sets options with screenOptions prop as an object', () => {
   );
 
   expect(root).toMatchInlineSnapshot(`
-    [
-      <main>
-        <h1>
-          Hello world
-        </h1>
-        <div>
-          Test screen A
-        </div>
-      </main>,
-      <main>
-        <h1>
-          Hello world
-        </h1>
-        <div>
-          Test screen B
-        </div>
-      </main>,
-    ]
-  `);
+        Array [
+          <main>
+            <h1>
+              Hello world
+            </h1>
+            <div>
+              Test screen A
+            </div>
+          </main>,
+          <main>
+            <h1>
+              Hello world
+            </h1>
+            <div>
+              Test screen B
+            </div>
+          </main>,
+        ]
+    `);
 });
 
 it('sets options with screenOptions prop as a fuction', () => {
@@ -227,7 +224,7 @@ it('sets options with screenOptions prop as a fuction', () => {
   );
 
   expect(root).toMatchInlineSnapshot(`
-    [
+    Array [
       <main>
         <h1>
           foo: Jane
@@ -427,7 +424,7 @@ it("returns correct value for canGoBack when it's not overridden", () => {
 
   render(root).update(root);
 
-  expect(result).toBe(false);
+  expect(result).toEqual(false);
 });
 
 it(`returns false for canGoBack when current router doesn't handle GO_BACK`, () => {

@@ -11,8 +11,7 @@ import {
 } from 'react-native';
 import useLatestCallback from 'use-latest-callback';
 
-import { PlatformPressable } from './PlatformPressable';
-import { TabBarItemLabel } from './TabBarItemLabel';
+import PlatformPressable from './PlatformPressable';
 import type { NavigationState, Route, Scene } from './types';
 
 export type Props<T extends Route> = {
@@ -86,26 +85,18 @@ const getInactiveOpacity = (
 
 type TabBarItemInternalProps<T extends Route> = Omit<
   Props<T>,
-  | 'navigationState'
-  | 'getAccessibilityLabel'
-  | 'getLabelText'
-  | 'getTestID'
-  | 'getAccessible'
+  'navigationState'
 > & {
   isFocused: boolean;
   index: number;
   routesLength: number;
-  accessibilityLabel?: string;
-  label?: string;
-  testID?: string;
-  accessible?: boolean;
 };
 
 const TabBarItemInternal = <T extends Route>({
-  accessibilityLabel,
-  accessible,
-  label: labelText,
-  testID,
+  getAccessibilityLabel,
+  getAccessible,
+  getLabelText,
+  getTestID,
   onLongPress,
   onPress,
   isFocused,
@@ -175,16 +166,29 @@ const TabBarItemInternal = <T extends Route>({
     }
   }
 
-  const renderLabel = renderLabelCustom
-    ? renderLabelCustom
-    : (labelProps: { color: string }) => (
-        <TabBarItemLabel
-          {...labelProps}
-          icon={icon}
-          label={labelText}
-          labelStyle={labelStyle}
-        />
-      );
+  const renderLabel =
+    renderLabelCustom !== undefined
+      ? renderLabelCustom
+      : (labelProps: { route: T; color: string }) => {
+          const labelText = getLabelText({ route: labelProps.route });
+
+          if (typeof labelText === 'string') {
+            return (
+              <Animated.Text
+                style={[
+                  styles.label,
+                  icon ? { marginTop: 0 } : null,
+                  labelStyle,
+                  { color: labelProps.color },
+                ]}
+              >
+                {labelText}
+              </Animated.Text>
+            );
+          }
+
+          return labelText;
+        };
 
   if (renderLabel) {
     const activeLabel = renderLabel({
@@ -221,16 +225,20 @@ const TabBarItemInternal = <T extends Route>({
 
   const scene = { route };
 
+  let accessibilityLabel = getAccessibilityLabel(scene);
+
   accessibilityLabel =
-    typeof accessibilityLabel !== 'undefined' ? accessibilityLabel : labelText;
+    typeof accessibilityLabel !== 'undefined'
+      ? accessibilityLabel
+      : getLabelText(scene);
 
   const badge = renderBadge ? renderBadge(scene) : null;
 
   return (
     <PlatformPressable
       android_ripple={android_ripple}
-      testID={testID}
-      accessible={accessible}
+      testID={getTestID(scene)}
+      accessible={getAccessible(scene)}
       accessibilityLabel={accessibilityLabel}
       accessibilityRole="tab"
       accessibilityState={{ selected: isFocused }}
@@ -257,31 +265,14 @@ const MemoizedTabBarItemInternal = React.memo(
   TabBarItemInternal
 ) as typeof TabBarItemInternal;
 
-export function TabBarItem<T extends Route>(props: Props<T>) {
-  const {
-    onPress,
-    onLongPress,
-    onLayout,
-    navigationState,
-    route,
-    getAccessibilityLabel,
-    getLabelText,
-    getTestID,
-    getAccessible,
-    ...rest
-  } = props;
+function TabBarItem<T extends Route>(props: Props<T>) {
+  const { onPress, onLongPress, onLayout, navigationState, route, ...rest } =
+    props;
   const onPressLatest = useLatestCallback(onPress);
   const onLongPressLatest = useLatestCallback(onLongPress);
   const onLayoutLatest = useLatestCallback(onLayout ? onLayout : () => {});
 
   const tabIndex = navigationState.routes.indexOf(route);
-
-  const scene = { route };
-
-  const accessibilityLabel = getAccessibilityLabel(scene);
-  const label = getLabelText(scene);
-  const testID = getTestID(scene);
-  const accessible = getAccessible(scene);
 
   return (
     <MemoizedTabBarItemInternal
@@ -293,15 +284,18 @@ export function TabBarItem<T extends Route>(props: Props<T>) {
       route={route}
       index={tabIndex}
       routesLength={navigationState.routes.length}
-      accessibilityLabel={accessibilityLabel}
-      label={label}
-      testID={testID}
-      accessible={accessible}
     />
   );
 }
 
+export default TabBarItem;
+
 const styles = StyleSheet.create({
+  label: {
+    margin: 4,
+    backgroundColor: 'transparent',
+    textTransform: 'uppercase',
+  },
   icon: {
     margin: 2,
   },

@@ -1,4 +1,3 @@
-import { useLocale } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import {
@@ -9,10 +8,10 @@ import {
   TabView,
 } from 'react-native-tab-view';
 
-import { Albums } from '../../Shared/Albums';
-import { Article } from '../../Shared/Article';
-import { Chat } from '../../Shared/Chat';
-import { Contacts } from '../../Shared/Contacts';
+import Albums from '../../Shared/Albums';
+import Article from '../../Shared/Article';
+import Chat from '../../Shared/Chat';
+import Contacts from '../../Shared/Contacts';
 
 type State = NavigationState<{
   key: string;
@@ -28,8 +27,7 @@ const renderScene = SceneMap({
   medium: () => <Article />,
 });
 
-export const AutoWidthTabBar = () => {
-  const { direction } = useLocale();
+const AutoWidthTabBar = () => {
   const [index, onIndexChange] = React.useState(1);
   const [routes] = React.useState([
     { key: 'article', title: 'Article' },
@@ -48,11 +46,8 @@ export const AutoWidthTabBar = () => {
       scrollEnabled
       indicatorStyle={styles.indicator}
       style={styles.tabbar}
-      contentContainerStyle={styles.tabbarContentContainer}
       labelStyle={styles.label}
       tabStyle={styles.tabStyle}
-      gap={20}
-      direction={direction}
     />
   );
 
@@ -62,7 +57,6 @@ export const AutoWidthTabBar = () => {
         index,
         routes,
       }}
-      direction={direction}
       renderScene={renderScene}
       renderTabBar={renderTabBar}
       onIndexChange={onIndexChange}
@@ -79,12 +73,11 @@ AutoWidthTabBar.options = {
   },
 };
 
+export default AutoWidthTabBar;
+
 const styles = StyleSheet.create({
   tabbar: {
     backgroundColor: '#3f51b5',
-  },
-  tabbarContentContainer: {
-    paddingHorizontal: 10,
   },
   indicator: {
     backgroundColor: '#ffeb3b',

@@ -13,21 +13,17 @@ import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import type { LinkComponentDemoParamList } from '../screens';
-import { Albums } from '../Shared/Albums';
-import { Article } from '../Shared/Article';
+import Albums from '../Shared/Albums';
+import Article from '../Shared/Article';
 
 const scrollEnabled = Platform.select({ web: true, default: false });
 
 const LinkButton = ({
-  screen,
-  params,
-  action,
-  href,
+  to,
   ...rest
 }: React.ComponentProps<typeof Button> &
   Parameters<typeof useLinkProps>[0]) => {
-  // @ts-expect-error: This is already type-checked by the prop types
-  const props = useLinkProps({ screen, params, action, href });
+  const props = useLinkProps({ to });
 
   return <Button {...props} {...rest} />;
 };
@@ -40,22 +36,31 @@ const ArticleScreen = ({
     <ScrollView>
       <View style={styles.buttons}>
         <Link
-          screen="LinkComponent"
-          params={{ screen: 'Albums' }}
+          to={{ screen: 'LinkComponent', params: { screen: 'Albums' } }}
           style={[styles.button, { padding: 8 }]}
         >
-          Go to LinkComponent &gt; Albums
+          Go to /link-component/music
         </Link>
         <Link
-          screen="LinkComponent"
-          params={{ screen: 'Albums' }}
+          to="/link-component/music"
           action={StackActions.replace('Albums')}
           style={[styles.button, { padding: 8 }]}
         >
-          Replace with LinkComponent &gt; Albums
+          Replace with /link-component/music
         </Link>
-        <LinkButton screen="Home" mode="contained" style={styles.button}>
-          Go to Home
+        <LinkButton
+          to="/link-component/music"
+          mode="contained"
+          style={styles.button}
+        >
+          Go to /link-component/music
+        </LinkButton>
+        <LinkButton
+          to={{ screen: 'Home' }}
+          mode="contained"
+          style={styles.button}
+        >
+          Go to /
         </LinkButton>
         <Button
           mode="outlined"
@@ -80,15 +85,13 @@ const AlbumsScreen = ({
     <ScrollView>
       <View style={styles.buttons}>
         <Link
-          screen="LinkComponent"
-          params={{ screen: 'Article', params: { author: 'Babel' } }}
+          to="/link-component/article/babel"
           style={[styles.button, { padding: 8 }]}
         >
           Go to /link-component/article
         </Link>
         <LinkButton
-          screen="LinkComponent"
-          params={{ screen: 'Article', params: { author: 'Babel' } }}
+          to="/link-component/article/babel"
           mode="contained"
           style={styles.button}
         >
@@ -112,7 +115,7 @@ const SimpleStack = createStackNavigator<LinkComponentDemoParamList>();
 type Props = Partial<React.ComponentProps<typeof SimpleStack.Navigator>> &
   StackScreenProps<ParamListBase>;
 
-export function LinkComponent({ navigation, ...rest }: Props) {
+export default function SimpleStackScreen({ navigation, ...rest }: Props) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,

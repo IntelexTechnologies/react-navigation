@@ -1,6 +1,6 @@
 import type { HeaderOptions } from '../types';
 
-export function getHeaderTitle(
+export default function getHeaderTitle(
   options: { title?: string; headerTitle?: HeaderOptions['headerTitle'] },
   fallback: string
 ): string {

@@ -6,12 +6,11 @@ import type {
 import escape from 'escape-string-regexp';
 import * as queryString from 'query-string';
 
-import { findFocusedRoute } from './findFocusedRoute';
+import findFocusedRoute from './findFocusedRoute';
 import type { PathConfigMap } from './types';
-import { validatePathConfig } from './validatePathConfig';
+import validatePathConfig from './validatePathConfig';
 
 type Options<ParamList extends {}> = {
-  path?: string;
   initialRouteName?: string;
   screens: PathConfigMap<ParamList>;
 };
@@ -63,7 +62,7 @@ type ParsedRoute = {
  * @param path Path string to parse and convert, e.g. /foo/bar?count=42.
  * @param options Extra options to fine-tune how to parse the path.
  */
-export function getStateFromPath<ParamList extends {}>(
+export default function getStateFromPath<ParamList extends {}>(
   path: string,
   options?: Options<ParamList>
 ): ResultState | undefined {
@@ -89,21 +88,6 @@ export function getStateFromPath<ParamList extends {}>(
 
   // Make sure there is a trailing slash
   remaining = remaining.endsWith('/') ? remaining : `${remaining}/`;
-
-  const prefix = options?.path?.replace(/^\//, ''); // Remove extra leading slash
-
-  if (prefix) {
-    // Make sure there is a trailing slash
-    const normalizedPrefix = prefix.endsWith('/') ? prefix : `${prefix}/`;
-
-    // If the path doesn't start with the prefix, it's not a match
-    if (!remaining.startsWith(normalizedPrefix)) {
-      return undefined;
-    }
-
-    // Remove the prefix from the path
-    remaining = remaining.replace(normalizedPrefix, '');
-  }
 
   if (screens === undefined) {
     // When no config is specified, use the path segments as route names

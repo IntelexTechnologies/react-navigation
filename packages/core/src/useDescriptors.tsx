@@ -6,14 +6,13 @@ import type {
 } from '@react-navigation/routers';
 import * as React from 'react';
 
-import {
+import NavigationBuilderContext, {
   AddKeyedListener,
   AddListener,
-  NavigationBuilderContext,
 } from './NavigationBuilderContext';
-import { NavigationContext } from './NavigationContext';
-import { NavigationRouteContext } from './NavigationRouteContext';
-import { SceneView } from './SceneView';
+import NavigationContext from './NavigationContext';
+import NavigationRouteContext from './NavigationRouteContext';
+import SceneView from './SceneView';
 import type {
   Descriptor,
   EventMapBase,
@@ -23,8 +22,8 @@ import type {
   RouteProp,
 } from './types';
 import type { NavigationEventEmitter } from './useEventEmitter';
-import { useNavigationCache } from './useNavigationCache';
-import { useRouteCache } from './useRouteCache';
+import useNavigationCache from './useNavigationCache';
+import useRouteCache from './useRouteCache';
 
 export type ScreenConfigWithParent<
   State extends NavigationState,
@@ -80,7 +79,7 @@ type Options<
  * - Options specified by the screen for the navigator
  * - Navigation object intended for the route
  */
-export function useDescriptors<
+export default function useDescriptors<
   State extends NavigationState,
   ActionHelpers extends Record<string, () => void>,
   ScreenOptions extends {},
@@ -100,9 +99,7 @@ export function useDescriptors<
   router,
   emitter,
 }: Options<State, ScreenOptions, EventMap>) {
-  const [options, setOptions] = React.useState<Record<string, ScreenOptions>>(
-    {}
-  );
+  const [options, setOptions] = React.useState<Record<string, object>>({});
   const { onDispatchAction, onOptionsChange, stackRef } = React.useContext(
     NavigationBuilderContext
   );
@@ -209,31 +206,29 @@ export function useDescriptors<
         return o;
       });
 
-    const element = (
-      <NavigationBuilderContext.Provider key={route.key} value={context}>
-        <NavigationContext.Provider value={navigation}>
-          <NavigationRouteContext.Provider value={route}>
-            <SceneView
-              navigation={navigation}
-              route={route}
-              screen={screen}
-              routeState={state.routes[i].state}
-              getState={getState}
-              setState={setState}
-              options={mergedOptions}
-              clearOptions={clearOptions}
-            />
-          </NavigationRouteContext.Provider>
-        </NavigationContext.Provider>
-      </NavigationBuilderContext.Provider>
-    );
-
     acc[route.key] = {
       route,
       // @ts-expect-error: it's missing action helpers, fix later
       navigation,
       render() {
-        return element;
+        return (
+          <NavigationBuilderContext.Provider key={route.key} value={context}>
+            <NavigationContext.Provider value={navigation}>
+              <NavigationRouteContext.Provider value={route}>
+                <SceneView
+                  navigation={navigation}
+                  route={route}
+                  screen={screen}
+                  routeState={state.routes[i].state}
+                  getState={getState}
+                  setState={setState}
+                  options={mergedOptions}
+                  clearOptions={clearOptions}
+                />
+              </NavigationRouteContext.Provider>
+            </NavigationContext.Provider>
+          </NavigationBuilderContext.Provider>
+        );
       },
       options: mergedOptions as ScreenOptions,
     };

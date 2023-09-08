@@ -39,7 +39,7 @@ const Paragraph = ({
   );
 };
 
-export function Article({
+export default function Article({
   date = '1st Jan 2025',
   author = {
     name: 'Knowledge Bot',

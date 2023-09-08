@@ -1,11 +1,10 @@
 import { nanoid } from 'nanoid/non-secure';
 
-import {
+import TabRouter, {
   TabActionHelpers,
   TabActions,
   TabActionType,
   TabNavigationState,
-  TabRouter,
   TabRouterOptions,
 } from './TabRouter';
 import type {
@@ -80,7 +79,7 @@ export const DrawerActions = {
   },
 };
 
-export function DrawerRouter({
+export default function DrawerRouter({
   defaultStatus = 'closed',
   ...rest
 }: DrawerRouterOptions): Router<
@@ -221,8 +220,7 @@ export function DrawerRouter({
           return addDrawerToHistory(state);
 
         case 'JUMP_TO':
-        case 'NAVIGATE':
-        case 'NAVIGATE_DEPRECATED': {
+        case 'NAVIGATE': {
           const result = router.getStateForAction(state, action, options);
 
           if (result != null && result.index !== state.index) {

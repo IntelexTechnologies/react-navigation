@@ -3,7 +3,6 @@ import {
   ParamListBase,
   Route,
   TabNavigationState,
-  useLocale,
   useTheme,
 } from '@react-navigation/native';
 import * as React from 'react';
@@ -15,8 +14,7 @@ import type {
   MaterialTopTabNavigationConfig,
   MaterialTopTabNavigationHelpers,
 } from '../types';
-import { TabAnimationContext } from '../utils/TabAnimationContext';
-import { MaterialTopTabBar } from './MaterialTopTabBar';
+import MaterialTopTabBar from './MaterialTopTabBar';
 
 type Props = MaterialTopTabNavigationConfig & {
   state: TabNavigationState<ParamListBase>;
@@ -24,7 +22,7 @@ type Props = MaterialTopTabNavigationConfig & {
   descriptors: MaterialTopTabDescriptorMap;
 };
 
-export function MaterialTopTabView({
+export default function MaterialTopTabView({
   tabBar = (props: MaterialTopTabBarProps) => <MaterialTopTabBar {...props} />,
   state,
   navigation,
@@ -33,7 +31,6 @@ export function MaterialTopTabView({
   ...rest
 }: Props) {
   const { colors } = useTheme();
-  const { direction } = useLocale();
 
   const renderTabBar = (props: SceneRendererProps) => {
     return tabBar({
@@ -49,19 +46,16 @@ export function MaterialTopTabView({
   return (
     <TabView<Route<string>>
       {...rest}
-      onIndexChange={(index) => {
-        const route = state.routes[index];
-
+      onIndexChange={(index) =>
         navigation.dispatch({
-          ...CommonActions.navigate(route),
+          ...CommonActions.navigate({
+            name: state.routes[index].name,
+            merge: true,
+          }),
           target: state.key,
-        });
-      }}
-      renderScene={({ route, position }) => (
-        <TabAnimationContext.Provider value={{ position }}>
-          {descriptors[route.key].render()}
-        </TabAnimationContext.Provider>
-      )}
+        })
+      }
+      renderScene={({ route }) => descriptors[route.key].render()}
       navigationState={state}
       renderTabBar={renderTabBar}
       renderLazyPlaceholder={({ route }) =>
@@ -77,7 +71,6 @@ export function MaterialTopTabView({
         { backgroundColor: colors.background },
         sceneContainerStyle,
       ]}
-      direction={direction}
     />
   );
 }

@@ -7,8 +7,8 @@ import * as React from 'react';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
-import { Albums } from '../Shared/Albums';
-import { Article } from '../Shared/Article';
+import Albums from '../Shared/Albums';
+import Article from '../Shared/Article';
 
 type ModalStackParams = {
   Article: { author: string };
@@ -71,11 +71,11 @@ const AlbumsScreen = ({ navigation }: StackScreenProps<ModalStackParams>) => {
   );
 };
 
-const Stack = createStackNavigator<ModalStackParams>();
+const ModalStack = createStackNavigator<ModalStackParams>();
 
 type Props = StackScreenProps<ParamListBase>;
 
-export function ModalStack({ navigation }: Props) {
+export default function ModalStackScreen({ navigation }: Props) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -83,8 +83,8 @@ export function ModalStack({ navigation }: Props) {
   }, [navigation]);
 
   return (
-    <Stack.Navigator screenOptions={{ presentation: 'modal' }}>
-      <Stack.Screen
+    <ModalStack.Navigator screenOptions={{ presentation: 'modal' }}>
+      <ModalStack.Screen
         name="Article"
         component={ArticleScreen}
         options={({ route }) => ({
@@ -92,12 +92,12 @@ export function ModalStack({ navigation }: Props) {
         })}
         initialParams={{ author: 'Gandalf' }}
       />
-      <Stack.Screen
+      <ModalStack.Screen
         name="Albums"
         component={AlbumsScreen}
         options={{ title: 'Albums' }}
       />
-    </Stack.Navigator>
+    </ModalStack.Navigator>
   );
 }
 

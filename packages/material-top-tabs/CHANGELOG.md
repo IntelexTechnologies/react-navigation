@@ -3,35 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-alpha.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@7.0.0-alpha.1...@react-navigation/material-top-tabs@7.0.0-alpha.2) (2023-06-22)
+## [6.6.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.6.2...@react-navigation/material-top-tabs@6.6.3) (2023-06-22)
 
 **Note:** Version bump only for package @react-navigation/material-top-tabs
 
-# [7.0.0-alpha.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@7.0.0-alpha.0...@react-navigation/material-top-tabs@7.0.0-alpha.1) (2023-03-01)
+## [6.6.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.6.1...@react-navigation/material-top-tabs@6.6.2) (2023-02-26)
 
 ### Bug Fixes
 
-* fix paths in sourcemap files ([368e069](https://github.com/react-navigation/react-navigation/commit/368e0691b9fb07d4b1cbe71cfe4c2f40512f93ad)) - by @satya164
+* fix paths in sourcemap files ([42c906d](https://github.com/react-navigation/react-navigation/commit/42c906d77d0235f7b3733c783308863ec686a54e)) - by @
+
+## [6.6.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.6.0...@react-navigation/material-top-tabs@6.6.1) (2023-02-23)
+
+**Note:** Version bump only for package @react-navigation/material-top-tabs
+
+# [6.6.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.5.3...@react-navigation/material-top-tabs@6.6.0) (2023-02-14)
 
 ### Features
 
-* add ability to customize the fonts with the theme ([#11243](https://github.com/react-navigation/react-navigation/issues/11243)) ([1cd6836](https://github.com/react-navigation/react-navigation/commit/1cd6836f1d10bcdf7f96d9e4b9f7de0ddea9391f)) - by @satya164
+* allow users to pass `android_ripple` config in TabView ([#11203](https://github.com/react-navigation/react-navigation/issues/11203)) ([a452ecb](https://github.com/react-navigation/react-navigation/commit/a452ecbfa00d963ff46f231919e66b3cd87f5939)), closes [#11198](https://github.com/react-navigation/react-navigation/issues/11198) - by @okwasniewski
 
-# [7.0.0-alpha.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.3.1...@react-navigation/material-top-tabs@7.0.0-alpha.0) (2023-02-17)
+## [6.5.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.5.2...@react-navigation/material-top-tabs@6.5.3) (2023-01-31)
 
-### Code Refactoring
+**Note:** Version bump only for package @react-navigation/material-top-tabs
 
-* move tab-view to direct dependency of material-top-tabs ([2bd585b](https://github.com/react-navigation/react-navigation/commit/2bd585b8055995daaacc20a3304d0a4e9ec70f44)) - by @satya164
+## [6.5.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.5.1...@react-navigation/material-top-tabs@6.5.2) (2023-01-10)
+
+**Note:** Version bump only for package @react-navigation/material-top-tabs
+
+## [6.5.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.5.0...@react-navigation/material-top-tabs@6.5.1) (2022-12-12)
+
+**Note:** Version bump only for package @react-navigation/material-top-tabs
+
+# [6.5.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.4.0...@react-navigation/material-top-tabs@6.5.0) (2022-12-07)
 
 ### Features
 
-* allow users to pass `android_ripple` config in TabView ([#11203](https://github.com/react-navigation/react-navigation/issues/11203)) ([15939d8](https://github.com/react-navigation/react-navigation/commit/15939d82cd7d77d2a75a870279d08cb18c7f9919)), closes [#11198](https://github.com/react-navigation/react-navigation/issues/11198) - by @okwasniewski
+* expose the original label in children prop for custom label functions in tab navigators ([417cb56](https://github.com/react-navigation/react-navigation/commit/417cb566c3c5304a0f5ebf4f32d0d42e5d1ca0f6)) - by @satya164
+
+# [6.4.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.3.1...@react-navigation/material-top-tabs@6.4.0) (2022-11-29)
+
+### Features
+
 * expose tabBarGap option in material top tabs ([#11038](https://github.com/react-navigation/react-navigation/issues/11038)) ([29818a8](https://github.com/react-navigation/react-navigation/commit/29818a80d5086e0702b352e68996a4384eb997e3)) - by @mlecoq
-* expose the original label in children prop for custom label functions in tab navigators ([a6fd49f](https://github.com/react-navigation/react-navigation/commit/a6fd49f9af9353cf5fd5364feafcbeea25c3ff7f)) - by @satya164
-
-### BREAKING CHANGES
-
-* This change will simplify installation of material-top-tabs, but that means user's version won't be used anymore. If users need to force specific version, they can use yarn's `resolutions` or npm's `overrides` feature.
 
 ## [6.3.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-top-tabs@6.3.0...@react-navigation/material-top-tabs@6.3.1) (2022-11-21)
 

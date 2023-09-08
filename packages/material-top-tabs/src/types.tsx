@@ -10,7 +10,6 @@ import type {
 } from '@react-navigation/native';
 import type React from 'react';
 import type {
-  Animated,
   PressableAndroidRippleConfig,
   StyleProp,
   TextStyle,
@@ -146,7 +145,7 @@ export type MaterialTopTabNavigationOptions = {
   /**
    * ID to locate this tab button in tests.
    */
-  tabBarButtonTestID?: string;
+  tabBarTestID?: string;
 
   /**
    * Color for the icon and label in the active tab.
@@ -299,8 +298,4 @@ export type MaterialTopTabBarProps = SceneRendererProps & {
     MaterialTopTabNavigationEventMap
   >;
   descriptors: MaterialTopTabDescriptorMap;
-};
-
-export type MaterialTopTabAnimationContext = {
-  position: Animated.AnimatedInterpolation<number>;
 };

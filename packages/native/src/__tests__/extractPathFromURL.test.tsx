@@ -1,4 +1,4 @@
-import { extractPathFromURL } from '../extractPathFromURL';
+import extractPathFromURL from '../extractPathFromURL';
 
 it('extracts path from URL with protocol', () => {
   expect(extractPathFromURL(['scheme://'], 'scheme://some/path')).toBe(
@@ -199,79 +199,79 @@ it('extracts path from URL with protocol, host and path', () => {
 });
 
 it('returns undefined for non-matching protocol', () => {
-  expect(extractPathFromURL(['scheme://'], 'foo://some/path')).toBeUndefined();
+  expect(extractPathFromURL(['scheme://'], 'foo://some/path')).toBe(undefined);
 
-  expect(extractPathFromURL(['scheme://'], 'foo:some/path')).toBeUndefined();
+  expect(extractPathFromURL(['scheme://'], 'foo:some/path')).toBe(undefined);
 
-  expect(extractPathFromURL(['scheme://'], 'foo:///some/path')).toBeUndefined();
+  expect(extractPathFromURL(['scheme://'], 'foo:///some/path')).toBe(undefined);
 
-  expect(extractPathFromURL(['scheme:///'], 'foo:some/path')).toBeUndefined();
+  expect(extractPathFromURL(['scheme:///'], 'foo:some/path')).toBe(undefined);
 
-  expect(extractPathFromURL(['scheme:'], 'foo:some/path')).toBeUndefined();
+  expect(extractPathFromURL(['scheme:'], 'foo:some/path')).toBe(undefined);
 
-  expect(extractPathFromURL(['scheme:'], 'foo://some/path')).toBeUndefined();
+  expect(extractPathFromURL(['scheme:'], 'foo://some/path')).toBe(undefined);
 
-  expect(extractPathFromURL(['scheme:'], 'foo:///some/path')).toBeUndefined();
+  expect(extractPathFromURL(['scheme:'], 'foo:///some/path')).toBe(undefined);
 });
 
 it('returns undefined for non-matching path', () => {
-  expect(
-    extractPathFromURL(['scheme://foo'], 'scheme://some/path')
-  ).toBeUndefined();
+  expect(extractPathFromURL(['scheme://foo'], 'scheme://some/path')).toBe(
+    undefined
+  );
 
-  expect(
-    extractPathFromURL(['scheme://foo'], 'scheme:some/path')
-  ).toBeUndefined();
+  expect(extractPathFromURL(['scheme://foo'], 'scheme:some/path')).toBe(
+    undefined
+  );
 
-  expect(
-    extractPathFromURL(['scheme://foo'], 'scheme:///some/path')
-  ).toBeUndefined();
+  expect(extractPathFromURL(['scheme://foo'], 'scheme:///some/path')).toBe(
+    undefined
+  );
 
-  expect(
-    extractPathFromURL(['scheme:///foo'], 'scheme:some/path')
-  ).toBeUndefined();
+  expect(extractPathFromURL(['scheme:///foo'], 'scheme:some/path')).toBe(
+    undefined
+  );
 
-  expect(
-    extractPathFromURL(['scheme:foo'], 'scheme:some/path')
-  ).toBeUndefined();
+  expect(extractPathFromURL(['scheme:foo'], 'scheme:some/path')).toBe(
+    undefined
+  );
 
-  expect(
-    extractPathFromURL(['scheme:foo'], 'scheme://some/path')
-  ).toBeUndefined();
+  expect(extractPathFromURL(['scheme:foo'], 'scheme://some/path')).toBe(
+    undefined
+  );
 
-  expect(
-    extractPathFromURL(['scheme:foo'], 'scheme:///some/path')
-  ).toBeUndefined();
+  expect(extractPathFromURL(['scheme:foo'], 'scheme:///some/path')).toBe(
+    undefined
+  );
 });
 
 it('returns undefined for non-matching host', () => {
   expect(
     extractPathFromURL(['scheme://example.com'], 'scheme://foo.com/some/path')
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(['scheme://example.com'], 'scheme:foo.com/some/path')
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(['scheme://example.com'], 'scheme:///foo.com/some/path')
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(['scheme:///example.com'], 'scheme:foo.com/some/path')
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(['scheme:example.com'], 'scheme:foo.com/some/path')
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(['scheme:example.com'], 'scheme://foo.com/some/path')
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(['scheme:example.com'], 'scheme:///foo.com/some/path')
-  ).toBeUndefined();
+  ).toBe(undefined);
 });
 
 it('returns undefined for non-matching host with wildcard', () => {
@@ -280,56 +280,47 @@ it('returns undefined for non-matching host with wildcard', () => {
       ['scheme://*.example.com'],
       'scheme://test.foo.com/some/path'
     )
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(
       ['scheme://*.example.com'],
       'scheme:test.foo.com/some/path'
     )
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(
       ['scheme://*.example.com'],
       'scheme:///test.foo.com/some/path'
     )
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(
       ['scheme:///*.example.com'],
       'scheme:test.foo.com/some/path'
     )
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(
       ['scheme:*.example.com'],
       'scheme:test.foo.com/some/path'
     )
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(
       ['scheme:*.example.com'],
       'scheme://test.foo.com/some/path'
     )
-  ).toBeUndefined();
+  ).toBe(undefined);
 
   expect(
     extractPathFromURL(
       ['scheme:*.example.com'],
       'scheme:///test.foo.com/some/path'
     )
-  ).toBeUndefined();
-});
-
-it('returns a valid search query when it has a url as param', () => {
-  expect(
-    extractPathFromURL(
-      ['https://mysite.com'],
-      'https://mysite.com/readPolicy?url=https://test.com'
-    )
-  ).toBe('/readPolicy?url=https://test.com');
+  ).toBe(undefined);
 });

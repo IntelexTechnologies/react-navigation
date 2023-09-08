@@ -7,15 +7,13 @@ import type {
 } from '@react-navigation/routers';
 import * as React from 'react';
 
-import { DeprecatedNavigationInChildContext } from './DeprecatedNavigationInChildContext';
-import {
+import NavigationBuilderContext, {
   ChildActionListener,
   ChildBeforeRemoveListener,
-  NavigationBuilderContext,
 } from './NavigationBuilderContext';
 import type { EventMapCore } from './types';
 import type { NavigationEventEmitter } from './useEventEmitter';
-import { shouldPreventRemove, useOnPreventRemove } from './useOnPreventRemove';
+import useOnPreventRemove, { shouldPreventRemove } from './useOnPreventRemove';
 
 type Options = {
   router: Router<NavigationState, NavigationAction>;
@@ -37,7 +35,7 @@ type Options = {
  *
  * When the action handler handles as action, it returns `true`, otherwise `false`.
  */
-export function useOnAction({
+export default function useOnAction({
   router,
   getState,
   setState,
@@ -53,9 +51,6 @@ export function useOnAction({
     addListener: addListenerParent,
     onDispatchAction,
   } = React.useContext(NavigationBuilderContext);
-  const navigationInChildEnabled = React.useContext(
-    DeprecatedNavigationInChildContext
-  );
 
   const routerConfigOptionsRef =
     React.useRef<RouterConfigOptions>(routerConfigOptions);
@@ -131,15 +126,12 @@ export function useOnAction({
         }
       }
 
-      if (typeof action.target === 'string' || navigationInChildEnabled) {
-        // If the action wasn't handled by current navigator or a parent navigator, let children handle it
-        // Handling this when target isn't specified is deprecated and will be removed in the future
-        for (let i = actionListeners.length - 1; i >= 0; i--) {
-          const listener = actionListeners[i];
+      // If the action wasn't handled by current navigator or a parent navigator, let children handle it
+      for (let i = actionListeners.length - 1; i >= 0; i--) {
+        const listener = actionListeners[i];
 
-          if (listener(action, visitedNavigators)) {
-            return true;
-          }
+        if (listener(action, visitedNavigators)) {
+          return true;
         }
       }
 
@@ -150,7 +142,6 @@ export function useOnAction({
       beforeRemoveListeners,
       emitter,
       getState,
-      navigationInChildEnabled,
       key,
       onActionParent,
       onDispatchAction,

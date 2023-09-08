@@ -123,7 +123,9 @@ type Action =
   | { type: 'SIGN_IN'; token: string }
   | { type: 'SIGN_OUT' };
 
-export function AuthFlow({ navigation }: StackScreenProps<ParamListBase>) {
+export default function SimpleStackScreen({
+  navigation,
+}: StackScreenProps<ParamListBase>) {
   const [state, dispatch] = React.useReducer<React.Reducer<State, Action>>(
     (prevState, action) => {
       switch (action.type) {
